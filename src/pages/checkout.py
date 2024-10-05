@@ -1,4 +1,5 @@
 import streamlit as st
+from app import vendors
 
 # Empty cart redirect, force people to shop and grab products
 if 'cart' not in st.session_state:
@@ -23,10 +24,12 @@ if checkout_btn:
 
 st.header("Cart Items")
 if st.session_state.cart:
-    for item in st.session_state.cart:
-        st.write(f"{item['product_name']} - ${item['original_price']:.2f}")
+    for id, quantity in st.session_state.cart.items():
+        name = next((p["name"] for v in vendors for p in v["products"] if p["id"] == id), "Unknown")
+        product_price = next((p["original_price"] for v in vendors for p in v["products"] if p["id"] == id), 0)
+        st.write(f"{name} x {quantity} = ${product_price * quantity:.2f}")
     st.subheader("Cart Summary")
-    total_price = sum(item['original_price'] for item in st.session_state.cart)
+    total_price = st.session_state.total
     st.write(f"Total: ${total_price:.2f}")
 else:
     st.write("No products added.")
