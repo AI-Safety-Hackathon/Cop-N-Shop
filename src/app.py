@@ -165,6 +165,9 @@ with col2:
     # Cart column
     st.subheader("Your Cart")
     
+    if st.button("Checkout"): 
+      st.switch_page("pages/checkout.py")
+    
     with st.expander("View Cart", expanded=False):
         if st.session_state.cart:
             for product_id, quantity in st.session_state.cart.items():
@@ -175,4 +178,3 @@ with col2:
             st.write(f"**Total: ${st.session_state.total:.2f}**")
         else:
             st.write("Your cart is empty.")
-
