@@ -1,0 +1,65 @@
+[
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def load_data():\n    # Load vendor data\n    with open(os.path.join('db', 'vendor_data.json')) as f:\n        vendor_data = json.load(f)\n    # Load product data\n    with open(os.path.join('db', 'updated_product_data.json')) as f:\n        product_data = json.load(f)\n    # Combine vendor data with products\n    vendors = []\n    for vendor in vendor_data['vendors']:",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "add_to_cart",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def add_to_cart(product):\n    st.session_state.cart.append(product)\n    st.success(f\"Added {product['product_name']} to cart!\")\n# Header\nst.title(\"Cop N' Shop Marketplace\")\nst.sidebar.header(\"Cart\")\nst.sidebar.write(\"Products in Cart: \", len(st.session_state.cart))\n# Display cart items\nif st.session_state.cart:\n    st.sidebar.subheader(\"Cart Items\")",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "vendors",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "vendors = load_data()\n# Initialize cart\nif 'cart' not in st.session_state:\n    st.session_state.cart = []\ndef add_to_cart(product):\n    st.session_state.cart.append(product)\n    st.success(f\"Added {product['product_name']} to cart!\")\n# Header\nst.title(\"Cop N' Shop Marketplace\")\nst.sidebar.header(\"Cart\")",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "vendors",
+        "kind": 5,
+        "importPath": "src.products_data",
+        "description": "src.products_data",
+        "peekOfCode": "vendors = [\n    {\n        \"name\": \"Vendor 1\",\n        \"products\": [\n            {\n                \"id\": 1,\n                \"name\": \"Product 1\",\n                \"price\": 10.00,\n                \"image\": \"https://via.placeholder.com/150\"\n            },",
+        "detail": "src.products_data",
+        "documentation": {}
+    }
+]
