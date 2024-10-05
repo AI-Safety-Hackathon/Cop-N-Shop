@@ -1,0 +1,19 @@
+{
+    "vendors" : [
+        {
+            "vendor_id": "11111",
+            "vendor_name": "Moe's Excellent Phones",
+            "created_on": "9/24/2022"
+        },
+        {
+            "vendor_id" : "22222",
+            "vendor_name" : "Jane's Phone Surplus",
+            "created_on": "6/1/2019"
+        },
+        {
+            "vendor_id" : "33333",
+            "vendor_name" : "Phone's R' Us",
+            "created_on": "10/4/2024"
+        }
+    ]
+}
