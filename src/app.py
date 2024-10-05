@@ -61,7 +61,7 @@ with col1:
     for vendor in vendors:
         st.subheader(vendor["name"])
         st.write(f"Rating: {vendor['rating']} ⭐")
-        for product in vendor["products"]:
+        for product in vendor["products"][:3]:
             col3, col4, col5 = st.columns([2, 3, 1])
             with col3:
                 st.image(product.get("image", "./images/placeholder.jpeg"), width=100, use_column_width=False)  # Reduced image size
