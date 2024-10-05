@@ -25,6 +25,7 @@ def load_data():
         vendors.append({
             'id': vendor_id,
             'name': vendor['vendor_name'],
+            'rating':vendor['vendor_rating'],
             'products': products
         })
     
@@ -59,6 +60,7 @@ with col1:
     # Main section to display vendors and products
     for vendor in vendors:
         st.subheader(vendor["name"])
+        st.write(f"Rating: {vendor['rating']} ⭐")
         for product in vendor["products"]:
             col3, col4, col5 = st.columns([2, 3, 1])
             with col3:
