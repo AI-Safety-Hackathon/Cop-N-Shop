@@ -3,17 +3,23 @@
         {
             "vendor_id": "11111",
             "vendor_name": "Moe's Excellent Phones",
-            "created_on": "9/24/2022"
+            "created_on": "9/24/2022",
+            "vendor_rating": 2.1,
+            "rating_count": 10
         },
         {
             "vendor_id" : "22222",
             "vendor_name" : "Jane's Phone Surplus",
-            "created_on": "6/1/2019"
+            "created_on": "6/1/2019",
+            "vendor_rating": 4.9,
+            "rating_count": 30
         },
         {
             "vendor_id" : "33333",
             "vendor_name" : "Phone's R' Us",
-            "created_on": "10/4/2024"
+            "created_on": "10/4/2024",
+            "vendor_rating": 4.5,
+            "rating_count": 3000
         }
     ]
 }
