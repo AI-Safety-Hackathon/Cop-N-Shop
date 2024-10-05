@@ -13,7 +13,7 @@ def load_data():
         vendor_data = json.load(f)
 
     # Load product data
-    with open(os.path.join('db', 'updated_product_data.json')) as f:
+    with open(os.path.join('db', 'product_data.json')) as f:
         product_data = json.load(f)
 
     # Combine vendor data with products
@@ -33,44 +33,60 @@ def load_data():
 # Load data
 vendors = load_data()
 
-# Initialize cart
+# Initialize session state for cart and total
 if 'cart' not in st.session_state:
-    st.session_state.cart = []
+    st.session_state.cart = {}
+if 'total' not in st.session_state:
+    st.session_state.total = 0
 
 def add_to_cart(product):
-    st.session_state.cart.append(product)
-    st.success(f"Added {product['product_name']} to cart!")
+    """Add the selected product to the cart."""
+    id = product["id"]
+    if id in st.session_state.cart:
+        st.session_state.cart[id] += 1  # Increment quantity
+    else:
+        st.session_state.cart[id] = 1  # Add new product
+    st.session_state.total += product["original_price"]  # Update total
+    st.success(f"Added {product['name']} to cart!")
 
 # Header
 st.title("Cop N' Shop Marketplace")
-st.sidebar.header("Cart")
-st.sidebar.write("Products in Cart: ", len(st.session_state.cart))
 
-# Display cart items
-if st.session_state.cart:
-    st.sidebar.subheader("Cart Items")
-    for item in st.session_state.cart:
-        st.sidebar.write(f"{item['product_name']} - ${item['original_price']:.2f}")
+# Create two columns: one for products and one for the cart
+col1, col2 = st.columns([3, 1])
 
-# Main section to display vendors and products
-for vendor in vendors:
-    st.subheader(vendor["name"])
-    for product in vendor["products"]:
-        col1, col2, col3 = st.columns([2, 3, 1])
-        with col1:
-            st.image(product.get("image", "./images/placeholder.jpeg"), use_column_width=True)  # Placeholder if no image is provided
-        with col2:
-            st.write(f"**{product['product_name']}**")
-            st.write(f"Price: ${product['original_price']:.2f}")
-            st.write(f"Brand: {product['product_brand']}")
-            st.write(f"OS: {product['product_os']}")
-            st.write(product['product_description'])
-        with col3:
-            if st.button("Add to Cart", key=product["product_id"]):
-                add_to_cart(product)
+with col1:
+    # Main section to display vendors and products
+    for vendor in vendors:
+        st.subheader(vendor["name"])
+        for product in vendor["products"]:
+            col3, col4, col5 = st.columns([2, 3, 1])
+            with col3:
+                st.image(product.get("image", "./images/placeholder.jpeg"), width=100, use_column_width=False)  # Reduced image size
+            with col4:
+                st.write(f"**{product['name']}**")
+                st.write(f"Price: ${product['original_price']:.2f}")
+                st.write(f"Brand: {product['brand']}")
+                st.write(f"OS: {product['os']}")
+                st.write(product['description'])
+            with col5:
+                if st.button("Add to Cart", key=product["id"]):
+                    add_to_cart(product)
 
-# Optionally, you can display the cart contents directly in the sidebar
-if st.session_state.cart:
-    st.sidebar.subheader("Cart Summary")
-    total_price = sum(item['original_price'] for item in st.session_state.cart)
-    st.sidebar.write(f"Total: ${total_price:.2f}")
+with col2:
+    # Cart column
+    st.subheader("Your Cart")
+    
+    if st.button("Proceed to Checkout"): 
+      st.switch_page("pages/checkout.py")
+    
+    with st.expander("View Cart", expanded=False):
+        if st.session_state.cart:
+            for id, quantity in st.session_state.cart.items():
+                # Find product details from the vendors data
+                name = next((p["name"] for v in vendors for p in v["products"] if p["id"] == id), "Unknown")
+                product_price = next((p["original_price"] for v in vendors for p in v["products"] if p["id"] == id), 0)
+                st.write(f"{name} x {quantity} = ${product_price * quantity:.2f}")
+            st.write(f"**Total: ${st.session_state.total:.2f}**")
+        else:
+            st.write("Your cart is empty.")

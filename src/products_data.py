@@ -1,5 +1,4 @@
 # data.py
-
 vendors = [
     {
         "name": "Vendor 1",
