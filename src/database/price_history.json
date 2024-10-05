@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Product 1",
+      "category": "Electronics",
+      "average_market_price": 12.00,
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 2,
+      "name": "Product 2",
+      "category": "Clothing",
+      "average_market_price": 17.00,
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 3,
+      "name": "Product 3",
+      "category": "Appliances",
+      "average_market_price": 22.00,
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 4,
+      "name": "Product 4",
+      "category": "Furniture",
+      "average_market_price": 27.00,
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 5,
+      "name": "Product 5",
+      "category": "Toys",
+      "average_market_price": 32.00,
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 6,
+      "name": "Product 6",
+      "category": "Tools",
+      "average_market_price": 37.00,
+      "image": "https://via.placeholder.com/150"
+    }
+  ]
+}
