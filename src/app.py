@@ -53,6 +53,9 @@ if st.session_state.cart:
         st.sidebar.write(f"{item['product_name']} - ${item['original_price']:.2f}")
 
 # Main section to display vendors and products
+if st.button("Checkout"): 
+    st.switch_page("pages/checkout.py")
+
 for vendor in vendors:
     st.subheader(vendor["name"])
     for product in vendor["products"]:
