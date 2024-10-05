@@ -1,13 +1,14 @@
 # app.py
 
 import streamlit as st
-from products_data import vendors
+from src.products_data import vendors
 
 st.set_page_config(page_title="Cop N' Shop", page_icon="🚓", layout="wide")
 
 # Initialize cart
 if 'cart' not in st.session_state:
     st.session_state.cart = []
+    
 
 def add_to_cart(product):
     st.session_state.cart.append(product)
@@ -15,6 +16,7 @@ def add_to_cart(product):
 
 # Set page configuration
 # st.set_page_config(page_title="Marketplace", layout="wide")
+
 
 # Header
 st.title("Marketplace")
