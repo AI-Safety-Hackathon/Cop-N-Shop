@@ -1,0 +1,202 @@
+[
+    {
+        "id": 43232,
+        "name": "Samsung A257 Magnet",
+        "brand": "Samsung",
+        "os": "Feature phone",
+        "vendor_id": 33333,
+        "description": "A basic feature phone from Samsung, the A257 Magnet offers essential communication functions, including calling and texting, in a compact and durable design. Ideal for users who prefer simple functionality without the complexity of a smartphone.",
+        "original_price": 409.6,
+        "discount_percent": 10
+    },
+    {
+        "id": 42048,
+        "name": "Prestigio MultiPad 7.0 HD +",
+        "brand": "Prestigio",
+        "os": "Android 4.1",
+        "vendor_id": 33333,
+        "description": "This tablet runs on Android 4.1 and provides users with a 7-inch HD screen, making it a portable solution for browsing, media playback, and basic apps. Suitable for light use and entertainment on the go.",
+        "original_price": 884.82,
+        "discount_percent": 47
+    },
+    {
+        "id": 59692,
+        "name": "Lenovo A830",
+        "brand": "Lenovo",
+        "os": "Android 4.2.1",
+        "vendor_id": 33333,
+        "description": "A mid-range Android 4.2.1 smartphone, the Lenovo A830 features a large display and a reliable processor for everyday tasks. It\u2019s a great budget option for those looking for decent performance without the high price tag.",
+        "original_price": 928.92,
+        "discount_percent": 52
+    },
+    {
+        "id": 39589,
+        "name": "Infinix Hot 7",
+        "brand": "Infinix",
+        "os": "Android 8.0 Oreo",
+        "vendor_id": 11111,
+        "description": "The Infinix Hot 7 is an Android 8.0 smartphone designed for those seeking affordable performance. It offers a large display and a decent camera, making it a practical choice for budget-conscious consumers.",
+        "original_price": 581.66,
+        "discount_percent": 17
+    },
+    {
+        "id": 98636,
+        "name": "BLU Studio M HD",
+        "brand": "BLU",
+        "os": "Android 5.1",
+        "vendor_id": 22222,
+        "description": "The BLU Studio M HD is an Android 5.1 device with a sleek design and a high-definition display. It\u2019s perfect for users looking for an affordable smartphone with good media capabilities and solid day-to-day performance.",
+        "original_price": 784.37,
+        "discount_percent": 19
+    },
+    {
+        "id": 93284,
+        "name": "VK Mobile VK580",
+        "brand": "VK",
+        "os": "Feature phone",
+        "vendor_id": 22222,
+        "description": "The VK Mobile VK580 is a feature phone that offers simplicity and reliability. Its compact size and basic functionality make it suitable for users who need a straightforward phone for calls and texts.",
+        "original_price": 537.2,
+        "discount_percent": 58
+    },
+    {
+        "id": 12626,
+        "name": "Micromax Evok Dual Note E4815",
+        "brand": "Micromax",
+        "os": "Android 7.0",
+        "vendor_id": 22222,
+        "description": "The Micromax Evok Dual Note E4815 is an Android 7.0 smartphone with dual rear cameras for enhanced photography. It combines performance and style at an affordable price, making it a solid mid-range option.",
+        "original_price": 480.79,
+        "discount_percent": 53
+    },
+    {
+        "id": 87561,
+        "name": "BLU Studio C HD",
+        "brand": "BLU",
+        "os": "Android 5.1",
+        "vendor_id": 22222,
+        "description": "BLU Studio C HD runs on Android 5.1 and offers a large screen with vibrant colors. It is designed for users looking for a budget-friendly smartphone with good media and app performance.",
+        "original_price": 519.03,
+        "discount_percent": 50
+    },
+    {
+        "id": 10900,
+        "name": "Lava Fuel F1",
+        "brand": "Lava",
+        "os": "Android 5.1",
+        "vendor_id": 22222,
+        "description": "Lava Fuel F1 is an Android 5.1 smartphone built for endurance, with a long-lasting battery and smooth performance for everyday tasks. It\u2019s ideal for users looking for reliability on a budget.",
+        "original_price": 163.54,
+        "discount_percent": 32
+    },
+    {
+        "id": 23374,
+        "name": "Philips 399",
+        "brand": "Philips",
+        "os": "Feature phone",
+        "vendor_id": 22222,
+        "description": "Philips 399 is a feature phone that prioritizes functionality over complexity. With its easy-to-use interface, it is designed for those who value straightforward communication tools without unnecessary features.",
+        "original_price": 277.41,
+        "discount_percent": 24
+    },
+    {
+        "id": 42747,
+        "name": "Unnecto Eco",
+        "brand": "Unnecto",
+        "os": "Feature phone",
+        "vendor_id": 33333,
+        "description": "The Unnecto Eco is a budget feature phone, ideal for users who need basic mobile communication without the complexity of a smartphone. Compact and durable, it\u2019s designed for everyday use.",
+        "original_price": 315.86,
+        "discount_percent": 66
+    },
+    {
+        "id": 77229,
+        "name": "LG L Prime",
+        "brand": "LG",
+        "os": "Android 4.4.2",
+        "vendor_id": 33333,
+        "description": "LG L Prime is an Android 4.4.2 smartphone with a large display and reliable performance. It\u2019s a solid choice for users looking for a good balance between price and functionality.",
+        "original_price": 477.83,
+        "discount_percent": 30
+    },
+    {
+        "id": 46692,
+        "name": "Sagem my231x",
+        "brand": "Sagem",
+        "os": "Feature phone",
+        "vendor_id": 11111,
+        "description": "Sagem my231x is a simple and affordable feature phone, offering essential communication functions in a compact, easy-to-use design. Perfect for users who prioritize basic mobile services.",
+        "original_price": 194.78,
+        "discount_percent": 49
+    },
+    {
+        "id": 29412,
+        "name": "Samsung I9003 Galaxy SL",
+        "brand": "Samsung",
+        "os": "Android 2.2, up to 2.3, TouchWiz UI 3",
+        "vendor_id": 22222,
+        "description": "Samsung I9003 Galaxy SL is an Android 2.2 device with upgradable features and TouchWiz UI. It\u2019s designed for users who enjoy customization and basic multimedia capabilities.",
+        "original_price": 557.56,
+        "discount_percent": 12
+    },
+    {
+        "id": 91936,
+        "name": "vivo U20",
+        "brand": "vivo",
+        "os": "Android 9.0, Funtouch 9.2",
+        "vendor_id": 11111,
+        "description": "The vivo U20 is a powerful Android 9.0 smartphone that delivers excellent performance with its large display, fast processor, and impressive camera. It\u2019s a great option for users seeking high-end features at a mid-range price.",
+        "original_price": 853.0,
+        "discount_percent": 57
+    },
+    {
+        "id": 62291,
+        "name": "alcatel Miss Sixty 2009",
+        "brand": "alcatel",
+        "os": "Feature phone",
+        "vendor_id": 11111,
+        "description": "The alcatel Miss Sixty 2009 is a retro feature phone with a unique design, providing basic mobile communication in a stylish package. Ideal for users who prefer an unconventional and compact device.",
+        "original_price": 250.4,
+        "discount_percent": 18
+    },
+    {
+        "id": 71974,
+        "name": "Samsung T929 Memoir",
+        "brand": "Samsung",
+        "os": "Feature phone",
+        "vendor_id": 11111,
+        "description": "Samsung T929 Memoir is a feature phone with advanced multimedia capabilities, offering an excellent camera and a sleek design. It\u2019s a great choice for users looking for photography-focused devices.",
+        "original_price": 441.21,
+        "discount_percent": 30
+    },
+    {
+        "id": 50898,
+        "name": "Lava P7",
+        "brand": "Lava",
+        "os": "Android 5.1, up to 6.0",
+        "vendor_id": 22222,
+        "description": "Lava P7 is an Android 5.1 smartphone designed for users who need a balance between performance and affordability. Its upgradable system ensures continued compatibility with newer apps and software.",
+        "original_price": 461.38,
+        "discount_percent": 57
+    },
+    {
+        "id": 61200,
+        "name": "Samsung P940",
+        "brand": "Samsung",
+        "os": "Feature phone",
+        "vendor_id": 22222,
+        "description": "Samsung P940 is a feature phone that offers basic communication with a premium look. It is designed for users who need reliability in a sleek, compact design without the complexity of a smartphone.",
+        "original_price": 403.25,
+        "discount_percent": 59
+    },
+    {
+        "id": 43926,
+        "name": "Samsung Galaxy Tab 2 7.0 P3110",
+        "brand": "Samsung",
+        "os": "Android 4.0.3, up to 4.2.2, TouchWiz UX UI",
+        "vendor_id": 22222,
+        "description": "Samsung Galaxy Tab 2 7.0 P3110 is a compact Android 4.0 tablet that offers smooth performance for media, browsing, and apps. Its user-friendly TouchWiz UX UI makes it a great device for everyday use.",
+        "original_price": 550.0,
+        "discount_percent": 45
+    }
+]

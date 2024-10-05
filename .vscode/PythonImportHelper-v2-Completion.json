@@ -9,19 +9,12 @@
         "documentation": {}
     },
     {
-        "label": "vendors",
-        "importPath": "src.products_data",
-        "description": "src.products_data",
+        "label": "json",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "src.products_data",
-        "documentation": {}
-    },
-    {
-        "label": "vendors",
-        "importPath": "src.products_data",
-        "description": "src.products_data",
-        "isExtraImport": true,
-        "detail": "src.products_data",
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
         "documentation": {}
     },
     {
@@ -31,15 +24,6 @@
         "importPath": "os",
         "description": "os",
         "detail": "os",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
         "documentation": {}
     },
     {
@@ -95,8 +79,17 @@
         "kind": 2,
         "importPath": "src.tools.tools",
         "description": "src.tools.tools",
-        "peekOfCode": "def price_comparison(vendors, market_data, product_name_or_id):\n    market_lookup = {product['id']: product \n                     for product in market_data['products']}\n    for vendor in vendors:\n        for product in vendor['products']:\n            if (product['id'] == product_name_or_id or \n                product['name'] == product_name_or_id):\n                market_product = market_lookup.get(product['id'])\n                if market_product:\n                    vendor_price = product['price']",
+        "peekOfCode": "def price_comparison(product_data, market_data, product_name_or_id):\n    market_lookup = {product['id']: product \n                     for product in market_data['products']}\n    for data in product_data:\n        # for product in data['products']:\n            if (data['id'] == product_name_or_id or \n                data['name'] == product_name_or_id):\n                market_product = market_lookup.get(data['id'])\n                if market_product:\n                    vendor_price = data['original_price']",
         "detail": "src.tools.tools",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def load_data():\n    # Load vendor data\n    with open(os.path.join('db', 'vendor_data.json')) as f:\n        vendor_data = json.load(f)\n    # Load product data\n    with open(os.path.join('db', 'updated_product_data.json')) as f:\n        product_data = json.load(f)\n    # Combine vendor data with products\n    vendors = []\n    for vendor in vendor_data['vendors']:",
+        "detail": "src.app",
         "documentation": {}
     },
     {
@@ -104,7 +97,16 @@
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def add_to_cart(product):\n    st.session_state.cart.append(product)\n    st.success(f\"Added {product['name']} to cart!\")\n# Set page configuration\n# st.set_page_config(page_title=\"Marketplace\", layout=\"wide\")\n# Header\nst.title(\"Marketplace\")\nst.sidebar.header(\"Cart\")\nst.sidebar.write(\"Products in Cart: \", len(st.session_state.cart))\n# Display cart items",
+        "peekOfCode": "def add_to_cart(product):\n    st.session_state.cart.append(product)\n    st.success(f\"Added {product['product_name']} to cart!\")\n# Header\nst.title(\"Cop N' Shop Marketplace\")\nst.sidebar.header(\"Cart\")\nst.sidebar.write(\"Products in Cart: \", len(st.session_state.cart))\n# Display cart items\nif st.session_state.cart:\n    st.sidebar.subheader(\"Cart Items\")",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "vendors",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "vendors = load_data()\n# Initialize cart\nif 'cart' not in st.session_state:\n    st.session_state.cart = []\ndef add_to_cart(product):\n    st.session_state.cart.append(product)\n    st.success(f\"Added {product['product_name']} to cart!\")\n# Header\nst.title(\"Cop N' Shop Marketplace\")\nst.sidebar.header(\"Cart\")",
         "detail": "src.app",
         "documentation": {}
     },
@@ -113,7 +115,7 @@
         "kind": 2,
         "importPath": "src.police_agent",
         "description": "src.police_agent",
-        "peekOfCode": "def format_agent_response(comparison_result):\n    if \"error\" in comparison_result:\n        return comparison_result[\"error\"]\n    product_name = comparison_result[\"product_name\"]\n    vendor_price = comparison_result[\"vendor_price\"]\n    market_price = comparison_result[\"market_price\"]\n    comparison = comparison_result[\"comparison\"]\n    if comparison == \"lower\":\n        return f\"Vendor's price for {product_name} (${vendor_price}) is lower than the market price (${market_price}).\"\n    elif comparison == \"higher\":",
+        "peekOfCode": "def format_agent_response(comparison_result):\n    if \"error\" in comparison_result:\n        return comparison_result[\"error\"]\n    product_name = comparison_result[\"product_name\"]\n    vendor_price = comparison_result[\"vendor_price\"]\n    market_price = comparison_result[\"market_price\"]\n    comparison = comparison_result[\"comparison\"]\n    price_difference_percentage = ((market_price - vendor_price) / market_price) * 100\n    significant_discount_threshold = 30  \n    if comparison == \"lower\":",
         "detail": "src.police_agent",
         "documentation": {}
     },
@@ -122,7 +124,7 @@
         "kind": 2,
         "importPath": "src.police_agent",
         "description": "src.police_agent",
-        "peekOfCode": "def block_transaction_tool(product_name):\n    # Simulate blocking a transaction\n    return f\"Transaction for {product_name} has been blocked due \\\n             to suspected fraud.\"\ntools = [price_comparison_tool, ]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)",
+        "peekOfCode": "def block_transaction_tool(product_name):\n    pass\ntools = [price_comparison_tool, ]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")",
         "detail": "src.police_agent",
         "documentation": {}
     },
@@ -131,7 +133,7 @@
         "kind": 5,
         "importPath": "src.police_agent",
         "description": "src.police_agent",
-        "peekOfCode": "openai_api_key = os.getenv(\"OPENAI_API_KEY\")\nif not openai_api_key:\n    raise ValueError(\"OPENAI_API_KEY is not set in the environment variables.\")\nwith open('src/database/price_history.json', 'r') as file:\n    market_data = json.load(file)\ndef format_agent_response(comparison_result):\n    if \"error\" in comparison_result:\n        return comparison_result[\"error\"]\n    product_name = comparison_result[\"product_name\"]\n    vendor_price = comparison_result[\"vendor_price\"]",
+        "peekOfCode": "openai_api_key = os.getenv(\"OPENAI_API_KEY\")\nif not openai_api_key:\n    raise ValueError(\"OPENAI_API_KEY is not set in the environment variables.\")\nwith open('src/db/price_history.json', 'r') as file:\n    market_data = json.load(file)\nwith open('src/db/product_data.json', 'r') as file:\n    product_data = json.load(file)\ndef format_agent_response(comparison_result):\n    if \"error\" in comparison_result:\n        return comparison_result[\"error\"]",
         "detail": "src.police_agent",
         "documentation": {}
     },
@@ -140,7 +142,7 @@
         "kind": 5,
         "importPath": "src.police_agent",
         "description": "src.police_agent",
-        "peekOfCode": "price_comparison_tool = Tool(\n    name=\"Price Comparison Tool\",\n    func=lambda product_name_or_id: format_agent_response(\n      price_comparison(vendors, market_data, product_name_or_id)),\n    description=\"Compares the vendor price with the average market price and provides a report.\"\n)\ndef block_transaction_tool(product_name):\n    # Simulate blocking a transaction\n    return f\"Transaction for {product_name} has been blocked due \\\n             to suspected fraud.\"",
+        "peekOfCode": "price_comparison_tool = Tool(\n    name=\"Price Comparison Tool\",\n    func=lambda product_name_or_id: format_agent_response(\n      price_comparison(product_data, market_data, product_name_or_id)),\n    description=\"Compares the vendor price with the average market price and provides a report.\"\n)\ndef block_transaction_tool(product_name):\n    pass\ntools = [price_comparison_tool, ]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)",
         "detail": "src.police_agent",
         "documentation": {}
     },
@@ -149,7 +151,7 @@
         "kind": 5,
         "importPath": "src.police_agent",
         "description": "src.police_agent",
-        "peekOfCode": "tools = [price_comparison_tool, ]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Product 1\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "peekOfCode": "tools = [price_comparison_tool, ]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
         "detail": "src.police_agent",
         "documentation": {}
     },
@@ -158,7 +160,7 @@
         "kind": 5,
         "importPath": "src.police_agent",
         "description": "src.police_agent",
-        "peekOfCode": "model = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Product 1\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "peekOfCode": "model = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
         "detail": "src.police_agent",
         "documentation": {}
     },
@@ -167,7 +169,7 @@
         "kind": 5,
         "importPath": "src.police_agent",
         "description": "src.police_agent",
-        "peekOfCode": "agent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Product 1\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "peekOfCode": "agent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
         "detail": "src.police_agent",
         "documentation": {}
     },
@@ -176,7 +178,7 @@
         "kind": 5,
         "importPath": "src.police_agent",
         "description": "src.police_agent",
-        "peekOfCode": "product_name = \"Product 1\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "peekOfCode": "product_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
         "detail": "src.police_agent",
         "documentation": {}
     },
