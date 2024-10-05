@@ -1,0 +1,203 @@
+[
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "ChatOpenAI",
+        "importPath": "langchain.chat_models",
+        "description": "langchain.chat_models",
+        "isExtraImport": true,
+        "detail": "langchain.chat_models",
+        "documentation": {}
+    },
+    {
+        "label": "HumanMessage",
+        "importPath": "langchain.schema",
+        "description": "langchain.schema",
+        "isExtraImport": true,
+        "detail": "langchain.schema",
+        "documentation": {}
+    },
+    {
+        "label": "initialize_agent",
+        "importPath": "langchain.agents",
+        "description": "langchain.agents",
+        "isExtraImport": true,
+        "detail": "langchain.agents",
+        "documentation": {}
+    },
+    {
+        "label": "Tool",
+        "importPath": "langchain.agents",
+        "description": "langchain.agents",
+        "isExtraImport": true,
+        "detail": "langchain.agents",
+        "documentation": {}
+    },
+    {
+        "label": "price_comparison",
+        "importPath": "src.tools.tools",
+        "description": "src.tools.tools",
+        "isExtraImport": true,
+        "detail": "src.tools.tools",
+        "documentation": {}
+    },
+    {
+        "label": "price_comparison",
+        "kind": 2,
+        "importPath": "src.tools.tools",
+        "description": "src.tools.tools",
+        "peekOfCode": "def price_comparison(product_data, market_data, product_name_or_id):\n    market_lookup = {product['id']: product \n                     for product in market_data['products']}\n    for data in product_data:\n        # for product in data['products']:\n            if (data['id'] == product_name_or_id or \n                data['name'] == product_name_or_id):\n                market_product = market_lookup.get(data['id'])\n                if market_product:\n                    vendor_price = data['original_price']",
+        "detail": "src.tools.tools",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def load_data():\n    # Load vendor data\n    with open(os.path.join('db', 'vendor_data.json')) as f:\n        vendor_data = json.load(f)\n    # Load product data\n    with open(os.path.join('db', 'updated_product_data.json')) as f:\n        product_data = json.load(f)\n    # Combine vendor data with products\n    vendors = []\n    for vendor in vendor_data['vendors']:",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "add_to_cart",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def add_to_cart(product):\n    st.session_state.cart.append(product)\n    st.success(f\"Added {product['product_name']} to cart!\")\n# Header\nst.title(\"Cop N' Shop Marketplace\")\nst.sidebar.header(\"Cart\")\nst.sidebar.write(\"Products in Cart: \", len(st.session_state.cart))\n# Display cart items\nif st.session_state.cart:\n    st.sidebar.subheader(\"Cart Items\")",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "vendors",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "vendors = load_data()\n# Initialize cart\nif 'cart' not in st.session_state:\n    st.session_state.cart = []\ndef add_to_cart(product):\n    st.session_state.cart.append(product)\n    st.success(f\"Added {product['product_name']} to cart!\")\n# Header\nst.title(\"Cop N' Shop Marketplace\")\nst.sidebar.header(\"Cart\")",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "format_agent_response",
+        "kind": 2,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "def format_agent_response(comparison_result):\n    if \"error\" in comparison_result:\n        return comparison_result[\"error\"]\n    product_name = comparison_result[\"product_name\"]\n    vendor_price = comparison_result[\"vendor_price\"]\n    market_price = comparison_result[\"market_price\"]\n    comparison = comparison_result[\"comparison\"]\n    price_difference_percentage = ((market_price - vendor_price) / market_price) * 100\n    significant_discount_threshold = 30  \n    if comparison == \"lower\":",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "block_transaction_tool",
+        "kind": 2,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "def block_transaction_tool(product_name):\n    pass\ntools = [price_comparison_tool, ]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "openai_api_key",
+        "kind": 5,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "openai_api_key = os.getenv(\"OPENAI_API_KEY\")\nif not openai_api_key:\n    raise ValueError(\"OPENAI_API_KEY is not set in the environment variables.\")\nwith open('src/db/price_history.json', 'r') as file:\n    market_data = json.load(file)\nwith open('src/db/product_data.json', 'r') as file:\n    product_data = json.load(file)\ndef format_agent_response(comparison_result):\n    if \"error\" in comparison_result:\n        return comparison_result[\"error\"]",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "price_comparison_tool",
+        "kind": 5,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "price_comparison_tool = Tool(\n    name=\"Price Comparison Tool\",\n    func=lambda product_name_or_id: format_agent_response(\n      price_comparison(product_data, market_data, product_name_or_id)),\n    description=\"Compares the vendor price with the average market price and provides a report.\"\n)\ndef block_transaction_tool(product_name):\n    pass\ntools = [price_comparison_tool, ]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "tools",
+        "kind": 5,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "tools = [price_comparison_tool, ]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "model = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "agent",
+        "kind": 5,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "agent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)\nproduct_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "product_name",
+        "kind": 5,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "product_name = \"Lenovo A830\"\nresponse = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "response",
+        "kind": 5,
+        "importPath": "src.police_agent",
+        "description": "src.police_agent",
+        "peekOfCode": "response = agent.run(f\"Compare the price of {product_name}\")\nprint(response)",
+        "detail": "src.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "vendors",
+        "kind": 5,
+        "importPath": "src.products_data",
+        "description": "src.products_data",
+        "peekOfCode": "vendors = [\n    {\n        \"name\": \"Vendor 1\",\n        \"products\": [\n            {\n                \"id\": 1,\n                \"name\": \"Product 1\",\n                \"price\": 10.00,\n                \"image\": \"https://via.placeholder.com/150\"\n            },",
+        "detail": "src.products_data",
+        "documentation": {}
+    }
+]
