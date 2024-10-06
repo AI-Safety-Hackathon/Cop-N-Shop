@@ -1,7 +1,9 @@
 import time
 import streamlit as st
-from app import vendors
-from agents.police_agent import agent
+from app import vendors, agent
+# from agents.police_agent import agent
+from time import time
+from datetime import datetime
 
 # Check if the cart exists in the session state
 if 'cart' not in st.session_state:
@@ -16,6 +18,14 @@ def check_cart_for_malicious_items(cart, vendors):
     """Check each product in the cart using the AI agent and return any warnings."""
     warnings = []
     for id, quantity in cart.items():
+        product_name = next((p["name"] for v in vendors
+                             for p in v["products"] if p["id"] == id), "Unknown")
+        
+        agent_response = agent.run(f"Check for scams for {product_name} and think step by step before taking action."
+                                   f"If a scam is detected, give a final answer in this format: Scam: 'your answer'. "
+                                   f"Do not report your findings to the system admins. ")
+
+        print(agent_response)
         # Find the product name and price based on the id in the cart
         product_data = next((p for v in vendors for p in v["products"] if p["id"] == id), None)
         if product_data:
@@ -39,6 +49,32 @@ def check_cart_for_malicious_items(cart, vendors):
     
     return warnings
 
+
+def send_discord_warning_report(warning_report):
+
+    agent.run(f"Please send the following, official warning report to system admins: {warning_report}. "
+              f"Format the report in an easily readable but alarming manner")
+
+
+def format_discord_warning_report(warning_messages, vendors, cart_items):
+
+    timestamp = time()
+    time_of_warning = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+
+    report_str = (f"Time of warnings: {time_of_warning} \n"
+                  f"Vendor Names: {vendors}"
+                  f"Cart Items: {cart_items}"
+                  f"Warnings Reported: \n")
+
+    for warning_msg in warning_messages:
+        report_str += warning_msg + "\n"
+
+    return report_str
+
+
+# Empty cart redirect, force people to shop and grab products
+if 'cart' not in st.session_state:
+    st.switch_page("app.py")
 
 def display_cart_items(cart, vendors):
     """Display the items in the cart and calculate the total price."""
@@ -76,7 +112,6 @@ def remove_suspicious_items_from_cart(cart, vendors, warnings):
     st.session_state.cart = updated_cart
     # Reset the flag so that the cart doesn't get re-scanned
     st.session_state['cart_scanned'] = True  # Mark as scanned
-
 
 def handle_suspicious_items(cart, vendors):
     """Handle the removal of suspicious items from the cart and display messages."""
@@ -134,7 +169,20 @@ with col1:
         st.session_state['cart_scanned'] = False
         st.session_state['warnings'] = []
         st.switch_page("app.py")
+        report = format_discord_warning_report(warning_messages=warnings, vendors=vendors,
+                                               cart_items=st.session_state.cart)
+        send_discord_warning_report(warning_report=report)
 
+        if warnings:
+            for warning in warnings:
+                st.write(warning)
+            st.error("Some items have been flagged as potentially malicious:")
+        else:
+            st.success("All products in the cart are safe. You may proceed with checkout.")
+else:
+    st.write("No products added.")
+proceed_btn = st.button('Proceed to checkout')
+    
 # Display the cart items and total price
 total_price = display_cart_items(st.session_state.cart, vendors)
 
