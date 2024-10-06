@@ -64,11 +64,7 @@ with col1:
         for product in vendor["products"][:3]:
             col3, col4, col5 = st.columns([2, 3, 1])
             with col3:
-<<<<<<< HEAD
-                st.image(product.get("image", "src/images/placeholder.jpeg"), width=100, use_column_width=False)  # Reduced image size
-=======
                 st.image(product.get("image", os.path.join('images', 'placeholder.jpeg')), width=100, use_column_width=False)  # Reduced image size
->>>>>>> f58a9c21adfb5e36c7d54b28faabe7018532db70
             with col4:
                 # st.write(f"**{product['name']}**")
                 st.markdown(f"<h3 style='font-size: 24px;'>{product['name']}</h3>", unsafe_allow_html=True) 
