@@ -6,6 +6,7 @@ from langchain.schema import HumanMessage
 from langchain.agents import initialize_agent, Tool
 from tools.tools import price_comparison
 from utils.utils import handle_error_case, extract_comparison_fields, calculate_price_difference_percentage
+from tools.discord_bot import send_message_to_discord
 
 load_dotenv()
 
@@ -91,10 +92,17 @@ price_comparison_tool = Tool(
     description="Compares the vendor price with the average market price and provides a report."
 )
 
-tools = [price_comparison_tool, ]
+send_discord_message_tool = Tool(
+    name='Discord Messaging Tool',
+    func=lambda discord_report: send_message_to_discord(discord_report),
+    description="Sends notification of scam to discord server through a bot"
+)
+
+tools = [price_comparison_tool, send_discord_message_tool, ]
 
 model = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)
 agent = initialize_agent(llm=model,
                          tools=tools, 
                          agent_type="zero-shot-react-description", 
                          verbose=True)
+
