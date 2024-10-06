@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 from langchain.agents import initialize_agent, Tool
-from tools.tools import price_comparison
+from tools.tools import price_comparison, BlockPurchaseTool
 from utils.utils import handle_error_case, extract_comparison_fields, calculate_price_difference_percentage
 
 load_dotenv()
@@ -91,7 +91,9 @@ price_comparison_tool = Tool(
     description="Compares the vendor price with the average market price and provides a report."
 )
 
-tools = [price_comparison_tool, ]
+block_purchase_tool = BlockPurchaseTool()
+
+tools = [price_comparison_tool]
 
 model = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)
 agent = initialize_agent(llm=model,
