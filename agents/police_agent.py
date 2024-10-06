@@ -6,6 +6,7 @@ from langchain.schema import HumanMessage
 from langchain.agents import initialize_agent, Tool
 from tools.tools import price_comparison, send_message_to_discord
 from utils.utils import handle_error_case, extract_comparison_fields, calculate_price_difference_percentage
+from tools.discord_bot import send_message_to_discord
 
 load_dotenv()
 
@@ -96,12 +97,15 @@ send_discord_message_tool = Tool(
     func=lambda discord_report: send_message_to_discord(discord_report),
     description="Sends notification of scam to discord server through a bot"
 )
+
 # block_purchase_tool = BlockPurchaseTool()
 
 tools = [price_comparison_tool, send_discord_message_tool]
+
 
 model = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)
 agent = initialize_agent(llm=model,
                          tools=tools, 
                          agent_type="zero-shot-react-description", 
                          verbose=True)
+
