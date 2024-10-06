@@ -7,7 +7,8 @@
         "vendor_id": 33333,
         "description": "A basic feature phone from Samsung, the A257 Magnet offers essential communication functions, including calling and texting, in a compact and durable design. Ideal for users who prefer simple functionality without the complexity of a smartphone.",
         "original_price": 409.6,
-        "discount_percent": 10
+        "discount_percent": 10,
+        "image": "images/phone_6.png"
     },
     {
         "id": 42048,
@@ -17,7 +18,8 @@
         "vendor_id": 33333,
         "description": "This tablet runs on Android 4.1 and provides users with a 7-inch HD screen, making it a portable solution for browsing, media playback, and basic apps. Suitable for light use and entertainment on the go.",
         "original_price": 884.82,
-        "discount_percent": 47
+        "discount_percent": 47,
+        "image":"images/phone_7.png"
     },
     {
         "id": 59692,
@@ -27,7 +29,8 @@
         "vendor_id": 33333,
         "description": "A mid-range Android 4.2.1 smartphone, the Lenovo A830 features a large display and a reliable processor for everyday tasks. It\u2019s a great budget option for those looking for decent performance without the high price tag.",
         "original_price": 928.92,
-        "discount_percent": 52
+        "discount_percent": 52,
+        "image":"images/phone_8.png"
     },
     {
         "id": 39589,
@@ -37,7 +40,8 @@
         "vendor_id": 11111,
         "description": "The Infinix Hot 7 is an Android 8.0 smartphone designed for those seeking affordable performance. It offers a large display and a decent camera, making it a practical choice for budget-conscious consumers.",
         "original_price": 581.66,
-        "discount_percent": 17
+        "discount_percent": 17,
+        "image": "images/phone_1.png"
     },
     {
         "id": 98636,
@@ -47,7 +51,8 @@
         "vendor_id": 22222,
         "description": "The BLU Studio M HD is an Android 5.1 device with a sleek design and a high-definition display. It\u2019s perfect for users looking for an affordable smartphone with good media capabilities and solid day-to-day performance.",
         "original_price": 784.37,
-        "discount_percent": 19
+        "discount_percent": 19,
+        "image": "images/phone_3.png"
     },
     {
         "id": 93284,
@@ -57,7 +62,8 @@
         "vendor_id": 22222,
         "description": "The VK Mobile VK580 is a feature phone that offers simplicity and reliability. Its compact size and basic functionality make it suitable for users who need a straightforward phone for calls and texts.",
         "original_price": 537.2,
-        "discount_percent": 58
+        "discount_percent": 58,
+        "image": "images/phone_4.png"
     },
     {
         "id": 12626,
@@ -67,7 +73,8 @@
         "vendor_id": 22222,
         "description": "The Micromax Evok Dual Note E4815 is an Android 7.0 smartphone with dual rear cameras for enhanced photography. It combines performance and style at an affordable price, making it a solid mid-range option.",
         "original_price": 480.79,
-        "discount_percent": 53
+        "discount_percent": 53,
+        "image": "images/phone_5.png"
     },
     {
         "id": 87561,
@@ -127,7 +134,8 @@
         "vendor_id": 11111,
         "description": "Sagem my231x is a simple and affordable feature phone, offering essential communication functions in a compact, easy-to-use design. Perfect for users who prioritize basic mobile services.",
         "original_price": 194.78,
-        "discount_percent": 49
+        "discount_percent": 49,
+        "image": "images/funny_phone_2.png"
     },
     {
         "id": 29412,
@@ -147,7 +155,8 @@
         "vendor_id": 11111,
         "description": "The vivo U20 is a powerful Android 9.0 smartphone that delivers excellent performance with its large display, fast processor, and impressive camera. It\u2019s a great option for users seeking high-end features at a mid-range price.",
         "original_price": 853.0,
-        "discount_percent": 57
+        "discount_percent": 57,
+        "image": "images/phone_2.jpeg"
     },
     {
         "id": 62291,
