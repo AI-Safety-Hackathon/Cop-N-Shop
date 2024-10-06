@@ -8,6 +8,9 @@ st.title("Chat with Vendor")
 if 'vendor' not in st.session_state:
     st.switch_page("app.py")
 
+if st.button("Return to Products"):
+    st.switch_page("app.py")
+
 openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
     raise ValueError("OPENAI_API_KEY is not set in the environment variables.")
