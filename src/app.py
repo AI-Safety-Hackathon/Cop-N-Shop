@@ -82,7 +82,7 @@ with col2:
     if st.button("Proceed to Checkout"): 
       st.switch_page("pages/checkout.py")
     
-    with st.expander("View Cart", expanded=False):
+    with st.expander(f"View Cart - ({len(st.session_state.cart.items())}) - $**{st.session_state.total:.2f}**", expanded=False):
         if st.session_state.cart:
             for id, quantity in st.session_state.cart.items():
                 # Find product details from the vendors data
