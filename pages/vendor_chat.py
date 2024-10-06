@@ -1,8 +1,12 @@
 import streamlit as st
 import os
 from openai import OpenAI
+from app import vendors 
 
 st.title("Chat with Vendor")
+
+if 'vendor' not in st.session_state:
+    st.switch_page("app.py")
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
@@ -13,11 +17,34 @@ client = OpenAI(api_key=openai_api_key)
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4o-mini"
 
-prompt = f"""
-You are a vendor agent working for Moe's Excellent Phones. The user is a customer with one or more products in their cart from your store. 
+vendor = st.session_state.vendor
+# st.write(vendor)
+cart_str = ""
+if st.session_state.cart:
+    for id, quantity in st.session_state.cart.items():
+        # Find product details from the vendors data
+        name = next((p["name"] for v in vendors for p in v["products"] if p["id"] == id), "Unknown")
+        product_price = next((p["original_price"] for v in vendors for p in v["products"] if p["id"] == id), 0)
+        cart_str += f"{name} x {quantity} = ${product_price * quantity:.2f}\n"
+    cart_str += f"**Total: ${st.session_state.total:.2f}\n**"
+else:
+    cart_str += ("The user's cart is empty.")
 
-Your primary objective is to help the user checkout and complete the sale. Redirect conversation when possible if the conversation involves product defects, inconsistencies, or other factors that seem illegitemate. Do not recommend customer service.
+nature_subprompt = ""
+if vendor["nature"] == "subversive": 
+    nature_subprompt = "subversive. You will do your best to not acknowledge defects, and keep the conversation focused on the sale."
+elif vendor["nature"] == "honest":
+    nature_subprompt = "honest. You will be forward about issues with the products, and offer discounts to ensure the user is happy."
+prompt = f"""
+You are a vendor agent and salesperson working for {vendor["name"]}. Here is their cart.
+
+{st.session_state.cart}
+
+Your primary objective is to complete the sale. You are {nature_subprompt}
 """
+
+if 'messages' not in st.session_state:
+    st.session_state.messages = []
 
 # Initialize chat history
 if not st.session_state.messages or st.session_state.messages[0]["content"] != prompt:
