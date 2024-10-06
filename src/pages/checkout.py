@@ -12,14 +12,15 @@ col1, col2 = st.columns(2)
 with col1:
     back_btn = st.button("Back to Products")
 with col2: 
-    checkout_btn = st.button("Checkout", type="primary")
+    checkout_btn = st.button("Proceed to Billing", type="primary")
 
 # Button Logic
 if back_btn:
     st.switch_page("app.py")
 if checkout_btn:
     #do something
-    st.success(f"Hit Checkout")
+    st.switch_page("pages/conclusion.py")
+
 
 
 st.header("Cart Items")
