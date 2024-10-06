@@ -26,6 +26,14 @@
         "documentation": {}
     },
     {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
         "label": "ChatOpenAI",
         "importPath": "langchain.chat_models",
         "description": "langchain.chat_models",
@@ -66,7 +74,7 @@
         "documentation": {}
     },
     {
-        "label": "BlockPurchaseTool",
+        "label": "send_message_to_discord",
         "importPath": "tools.tools",
         "description": "tools.tools",
         "isExtraImport": true,
@@ -107,12 +115,29 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "streamlit",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "streamlit",
         "description": "streamlit",
         "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "vendors",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
         "documentation": {}
     },
     {
@@ -140,11 +165,12 @@
         "documentation": {}
     },
     {
-        "label": "BaseTool",
-        "importPath": "langchain.tools",
-        "description": "langchain.tools",
+        "label": "discord",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "langchain.tools",
+        "importPath": "discord",
+        "description": "discord",
+        "detail": "discord",
         "documentation": {}
     },
     {
@@ -179,16 +205,16 @@
         "kind": 5,
         "importPath": "agents.police_agent",
         "description": "agents.police_agent",
-        "peekOfCode": "price_comparison_tool = Tool(\n    name=\"Price Comparison Tool\",\n    func=lambda product_name_or_id: format_agent_response(\n      price_comparison(product_data, market_data, product_name_or_id)),\n    description=\"Compares the vendor price with the average market price and provides a report.\"\n)\nblock_purchase_tool = BlockPurchaseTool()\ntools = [price_comparison_tool]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,",
+        "peekOfCode": "price_comparison_tool = Tool(\n    name=\"Price Comparison Tool\",\n    func=lambda product_name_or_id: format_agent_response(\n      price_comparison(product_data, market_data, product_name_or_id)),\n    description=\"Compares the vendor price with the average market price and provides a report.\"\n)\nsend_discord_message_tool = Tool(\n    name='Discord Messaging Tool',\n    func=lambda discord_report: send_message_to_discord(discord_report),\n    description=\"Sends notification of scam to discord server through a bot\"",
         "detail": "agents.police_agent",
         "documentation": {}
     },
     {
-        "label": "block_purchase_tool",
+        "label": "send_discord_message_tool",
         "kind": 5,
         "importPath": "agents.police_agent",
         "description": "agents.police_agent",
-        "peekOfCode": "block_purchase_tool = BlockPurchaseTool()\ntools = [price_comparison_tool]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)",
+        "peekOfCode": "send_discord_message_tool = Tool(\n    name='Discord Messaging Tool',\n    func=lambda discord_report: send_message_to_discord(discord_report),\n    description=\"Sends notification of scam to discord server through a bot\"\n)\n# block_purchase_tool = BlockPurchaseTool()\ntools = [price_comparison_tool, send_discord_message_tool]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, ",
         "detail": "agents.police_agent",
         "documentation": {}
     },
@@ -197,7 +223,7 @@
         "kind": 5,
         "importPath": "agents.police_agent",
         "description": "agents.police_agent",
-        "peekOfCode": "tools = [price_comparison_tool]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)",
+        "peekOfCode": "tools = [price_comparison_tool, send_discord_message_tool]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)",
         "detail": "agents.police_agent",
         "documentation": {}
     },
@@ -251,7 +277,7 @@
         "kind": 2,
         "importPath": "pages.checkout",
         "description": "pages.checkout",
-        "peekOfCode": "def handle_suspicious_items(cart, vendors):\n    \"\"\"Handle the removal of suspicious items from the cart and display messages.\"\"\"\n    if not st.session_state['cart_scanned'] and st.session_state['warnings']:\n        st.error(\"Some items have been flagged as potentially suspicious and will be removed from your cart.\")\n        time.sleep(5) \n        # Remove suspicious items\n        remove_suspicious_items_from_cart(cart, vendors, st.session_state['warnings'])\n        st.session_state['cart_scanned'] = True\n        st.rerun()\n    if st.session_state['cart_scanned']:",
+        "peekOfCode": "def handle_suspicious_items(cart, vendors):\n    \"\"\"Handle the removal of suspicious items from the cart and display messages.\"\"\"\n    if not st.session_state['cart_scanned'] and st.session_state['warnings']:\n        st.error(\"Some items have been flagged as potentially suspicious and will be removed from your cart.\")\n        report = format_discord_warning_report(warning_messages=st.session_state['warnings'], vendors=vendors,\n                                                      cart_items=st.session_state.cart)\n        send_discord_warning_report(warning_report=report)\n        time.sleep(5) \n        # Remove suspicious items\n        remove_suspicious_items_from_cart(cart, vendors, st.session_state['warnings'])",
         "detail": "pages.checkout",
         "documentation": {}
     },
@@ -261,6 +287,24 @@
         "importPath": "pages.checkout",
         "description": "pages.checkout",
         "peekOfCode": "def run_agent_on_cart(cart, vendors):\n    \"\"\"Run the AI agent on the cart to check for suspicious items.\"\"\"\n    if 'warnings' not in st.session_state:\n        st.session_state['warnings'] = [] \n    if cart and not st.session_state['cart_scanned']:\n        st.subheader(\"Agent's Report\")\n        with st.spinner(\"Please wait while our agent is scanning your cart for suspicious items...\"):\n            warnings = check_cart_for_malicious_items(cart, vendors)\n            if warnings:\n                st.session_state['warnings'] = warnings",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "send_discord_warning_report",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def send_discord_warning_report(warning_report):\n    response = agent.run(f\"\"\"Please send the following, official warning report to system admins: {warning_report}. \n                Format the report in an easily readable but alarming manner. \n                As an example, you can format it like this:\n                🔴🔴🔴 WARNING REPORT 🔴🔴🔴 \n                Cop-N-Shop Warning Report:\n                🕒 Time of warnings: 1728241827.7173142 \n                🛍 Vendor Names: \n                Moe's Excellent Phones\n                Rating: 2.1",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "format_discord_warning_report",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def format_discord_warning_report(warning_messages, vendors, cart_items):\n    timestamp = datetime.datetime.now()\n    time_of_warning = timestamp.strftime('%Y-%m-%d %H:%M:%S')\n    report_str = (f\"Time of warnings: {time_of_warning} \\n\"\n                  f\"Vendor Names: {vendors}\"\n                  f\"Cart Items: {cart_items}\"\n                  f\"Warnings Reported: \\n\")\n    for warning_msg in warning_messages:\n        report_str += warning_msg + \"\\n\"\n    return report_str",
         "detail": "pages.checkout",
         "documentation": {}
     },
@@ -287,7 +331,7 @@
         "kind": 5,
         "importPath": "pages.vendor_chat",
         "description": "pages.vendor_chat",
-        "peekOfCode": "openai_api_key = os.getenv(\"OPENAI_API_KEY\")\nif not openai_api_key:\n    raise ValueError(\"OPENAI_API_KEY is not set in the environment variables.\")\nclient = OpenAI(api_key=openai_api_key)\nif \"openai_model\" not in st.session_state:\n    st.session_state[\"openai_model\"] = \"gpt-4o-mini\"\nprompt = f\"\"\"\nYou are a vendor agent working for Moe's Excellent Phones. The user is a customer with one or more products in their cart from your store. \nYour primary objective is to help the user checkout and complete the sale. Redirect conversation when possible if the conversation involves product defects, inconsistencies, or other factors that seem illegitemate. Do not recommend customer service.\n\"\"\"",
+        "peekOfCode": "openai_api_key = os.getenv(\"OPENAI_API_KEY\")\nif not openai_api_key:\n    raise ValueError(\"OPENAI_API_KEY is not set in the environment variables.\")\nclient = OpenAI(api_key=openai_api_key)\nif \"openai_model\" not in st.session_state:\n    st.session_state[\"openai_model\"] = \"gpt-4o-mini\"\nvendor = st.session_state.vendor\n# st.write(vendor)\ncart_str = \"\"\nif st.session_state.cart:",
         "detail": "pages.vendor_chat",
         "documentation": {}
     },
@@ -296,7 +340,34 @@
         "kind": 5,
         "importPath": "pages.vendor_chat",
         "description": "pages.vendor_chat",
-        "peekOfCode": "client = OpenAI(api_key=openai_api_key)\nif \"openai_model\" not in st.session_state:\n    st.session_state[\"openai_model\"] = \"gpt-4o-mini\"\nprompt = f\"\"\"\nYou are a vendor agent working for Moe's Excellent Phones. The user is a customer with one or more products in their cart from your store. \nYour primary objective is to help the user checkout and complete the sale. Redirect conversation when possible if the conversation involves product defects, inconsistencies, or other factors that seem illegitemate. Do not recommend customer service.\n\"\"\"\n# Initialize chat history\nif not st.session_state.messages or st.session_state.messages[0][\"content\"] != prompt:\n    st.session_state.messages = [{\"role\": \"user\", \"content\": prompt}]",
+        "peekOfCode": "client = OpenAI(api_key=openai_api_key)\nif \"openai_model\" not in st.session_state:\n    st.session_state[\"openai_model\"] = \"gpt-4o-mini\"\nvendor = st.session_state.vendor\n# st.write(vendor)\ncart_str = \"\"\nif st.session_state.cart:\n    for id, quantity in st.session_state.cart.items():\n        # Find product details from the vendors data\n        name = next((p[\"name\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), \"Unknown\")",
+        "detail": "pages.vendor_chat",
+        "documentation": {}
+    },
+    {
+        "label": "vendor",
+        "kind": 5,
+        "importPath": "pages.vendor_chat",
+        "description": "pages.vendor_chat",
+        "peekOfCode": "vendor = st.session_state.vendor\n# st.write(vendor)\ncart_str = \"\"\nif st.session_state.cart:\n    for id, quantity in st.session_state.cart.items():\n        # Find product details from the vendors data\n        name = next((p[\"name\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), \"Unknown\")\n        product_price = next((p[\"original_price\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), 0)\n        cart_str += f\"{name} x {quantity} = ${product_price * quantity:.2f}\\n\"\n    cart_str += f\"**Total: ${st.session_state.total:.2f}\\n**\"",
+        "detail": "pages.vendor_chat",
+        "documentation": {}
+    },
+    {
+        "label": "cart_str",
+        "kind": 5,
+        "importPath": "pages.vendor_chat",
+        "description": "pages.vendor_chat",
+        "peekOfCode": "cart_str = \"\"\nif st.session_state.cart:\n    for id, quantity in st.session_state.cart.items():\n        # Find product details from the vendors data\n        name = next((p[\"name\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), \"Unknown\")\n        product_price = next((p[\"original_price\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), 0)\n        cart_str += f\"{name} x {quantity} = ${product_price * quantity:.2f}\\n\"\n    cart_str += f\"**Total: ${st.session_state.total:.2f}\\n**\"\nelse:\n    cart_str += (\"The user's cart is empty.\")",
+        "detail": "pages.vendor_chat",
+        "documentation": {}
+    },
+    {
+        "label": "nature_subprompt",
+        "kind": 5,
+        "importPath": "pages.vendor_chat",
+        "description": "pages.vendor_chat",
+        "peekOfCode": "nature_subprompt = \"\"\nif vendor[\"nature\"] == \"subversive\": \n    nature_subprompt = \"subversive. You will do your best to not acknowledge defects, and keep the conversation focused on the sale.\"\nelif vendor[\"nature\"] == \"honest\":\n    nature_subprompt = \"honest. You will be forward about issues with the products, and offer discounts to ensure the user is happy.\"\nprompt = f\"\"\"\nYou are a vendor agent and salesperson working for {vendor[\"name\"]}. Here is their cart.\n{st.session_state.cart}\nYour primary objective is to complete the sale. You are {nature_subprompt}\n\"\"\"",
         "detail": "pages.vendor_chat",
         "documentation": {}
     },
@@ -305,17 +376,8 @@
         "kind": 5,
         "importPath": "pages.vendor_chat",
         "description": "pages.vendor_chat",
-        "peekOfCode": "prompt = f\"\"\"\nYou are a vendor agent working for Moe's Excellent Phones. The user is a customer with one or more products in their cart from your store. \nYour primary objective is to help the user checkout and complete the sale. Redirect conversation when possible if the conversation involves product defects, inconsistencies, or other factors that seem illegitemate. Do not recommend customer service.\n\"\"\"\n# Initialize chat history\nif not st.session_state.messages or st.session_state.messages[0][\"content\"] != prompt:\n    st.session_state.messages = [{\"role\": \"user\", \"content\": prompt}]\n# Display chat messages from history on app rerun\nfor message in st.session_state.messages:\n    with st.chat_message(message[\"role\"]):",
+        "peekOfCode": "prompt = f\"\"\"\nYou are a vendor agent and salesperson working for {vendor[\"name\"]}. Here is their cart.\n{st.session_state.cart}\nYour primary objective is to complete the sale. You are {nature_subprompt}\n\"\"\"\nif 'messages' not in st.session_state:\n    st.session_state.messages = []\n# Initialize chat history\nif not st.session_state.messages or st.session_state.messages[0][\"content\"] != prompt:\n    st.session_state.messages = [{\"role\": \"user\", \"content\": prompt}]",
         "detail": "pages.vendor_chat",
-        "documentation": {}
-    },
-    {
-        "label": "BlockPurchaseTool",
-        "kind": 6,
-        "importPath": "tools.tools",
-        "description": "tools.tools",
-        "peekOfCode": "class BlockPurchaseTool(BaseTool):\n    name: str = \"Block Purchase Tool\"\n    description: str = \"Blocks the user from proceeding with a purchase if flagged items are detected.\"\n    def _run(self, input: list):\n        \"\"\"Checks flagged items and blocks purchase if necessary.\"\"\"\n        if input:\n            return f\"Purchase blocked due to the following flagged items: {', '.join(input)}\"\n        return \"No flagged items. Purchase can proceed.\"",
-        "detail": "tools.tools",
         "documentation": {}
     },
     {
@@ -324,6 +386,33 @@
         "importPath": "tools.tools",
         "description": "tools.tools",
         "peekOfCode": "def price_comparison(product_data, market_data, product_name_or_id):\n    market_lookup = {product['id']: product \n                     for product in market_data['products']}\n    for data in product_data:\n          if (data['id'] == product_name_or_id or \n              data['name'] == product_name_or_id):\n              market_product = market_lookup.get(data['id'])\n              if market_product:\n                  vendor_price = data['original_price']\n                  market_price = market_product['average_market_price']",
+        "detail": "tools.tools",
+        "documentation": {}
+    },
+    {
+        "label": "send_message_to_discord",
+        "kind": 2,
+        "importPath": "tools.tools",
+        "description": "tools.tools",
+        "peekOfCode": "def send_message_to_discord(message):\n    # Set up intents (for reading message content, if required)\n    intents = discord.Intents.default()\n    intents.message_content = True  # Ensure this is enabled\n    # Initialize the bot client\n    client = discord.Client(intents=intents)\n    # Event to trigger when the bot is ready\n    @client.event\n    async def on_ready():\n        print(f'Logged in as {client.user}')",
+        "detail": "tools.tools",
+        "documentation": {}
+    },
+    {
+        "label": "CHANNEL_ID",
+        "kind": 5,
+        "importPath": "tools.tools",
+        "description": "tools.tools",
+        "peekOfCode": "CHANNEL_ID = int(os.getenv('CHANNEL_ID'))\nBOT_TOKEN = os.getenv('BOT_TOKEN')\ndef send_message_to_discord(message):\n    # Set up intents (for reading message content, if required)\n    intents = discord.Intents.default()\n    intents.message_content = True  # Ensure this is enabled\n    # Initialize the bot client\n    client = discord.Client(intents=intents)\n    # Event to trigger when the bot is ready\n    @client.event",
+        "detail": "tools.tools",
+        "documentation": {}
+    },
+    {
+        "label": "BOT_TOKEN",
+        "kind": 5,
+        "importPath": "tools.tools",
+        "description": "tools.tools",
+        "peekOfCode": "BOT_TOKEN = os.getenv('BOT_TOKEN')\ndef send_message_to_discord(message):\n    # Set up intents (for reading message content, if required)\n    intents = discord.Intents.default()\n    intents.message_content = True  # Ensure this is enabled\n    # Initialize the bot client\n    client = discord.Client(intents=intents)\n    # Event to trigger when the bot is ready\n    @client.event\n    async def on_ready():",
         "detail": "tools.tools",
         "documentation": {}
     },
