@@ -2,6 +2,7 @@ import streamlit as st
 import os
 from openai import OpenAI
 from app import vendors 
+from agents.chat_agent import agent
 
 st.title("Chat with Vendor")
 
@@ -10,6 +11,8 @@ if 'vendor' not in st.session_state:
 
 if st.button("Return to Products"):
     st.switch_page("app.py")
+
+info_snackbar = st.info("Your chat is being monitored by a police agent.")
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
@@ -79,3 +82,20 @@ if prompt := st.chat_input("What is up?"):
         )
         response = st.write_stream(stream)
     st.session_state.messages.append({"role": "assistant", "content": response})
+
+    prompt = f"""
+    Given these messages, please analyze for subversive or inconsistent behavior on the part of the vendor. 
+
+    {st.session_state.messages}
+    """
+
+    # Police Agent parses and gives feedback
+    info_snackbar = st.info("Police agent is currently parsing message history...")
+
+    response = agent.run(prompt)
+
+    info_snackbar = st.info(response)
+
+    proceed_btn = st.button('Proceed to Conclusion page')
+    if proceed_btn:
+        st.switch_page("pages/conclusion.py", type="primary")
