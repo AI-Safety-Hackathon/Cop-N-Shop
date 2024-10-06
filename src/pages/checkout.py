@@ -10,10 +10,11 @@ def check_cart_for_malicious_items(cart, vendors):
         product_name = next((p["name"] for v in vendors
                              for p in v["products"] if p["id"] == id), "Unknown")
         
-        agent_response = agent.run(f"Compare the price of {product_name}")
+        agent_response = agent.run(f"Check for scams for {product_name} and think step by step before taking action."
+                                   f"If a scam is detected, give a final answer in this format: Scam: 'your answer'")
         print(agent_response)
 
-        if any(phrase in agent_response for phrase in ["significantly lower", "unusually cheap", "potential malicious vendor"]):
+        if any(phrase in agent_response for phrase in ["Scam"]):
             warnings.append(agent_response)
     
     return warnings

@@ -119,7 +119,7 @@
         "kind": 2,
         "importPath": "src.pages.checkout",
         "description": "src.pages.checkout",
-        "peekOfCode": "def check_cart_for_malicious_items(cart, vendors):\n    \"\"\"Check each product in the cart using the AI agent and return any warnings.\"\"\"\n    warnings = []\n    for id, quantity in cart.items():\n        product_name = next((p[\"name\"] for v in vendors\n                             for p in v[\"products\"] if p[\"id\"] == id), \"Unknown\")\n        agent_response = agent.run(f\"Compare the price of {product_name}\")\n        print(agent_response)\n        if any(phrase in agent_response for phrase in [\"significantly lower\", \"unusually cheap\", \"potential malicious vendor\"]):\n            warnings.append(agent_response)",
+        "peekOfCode": "def check_cart_for_malicious_items(cart, vendors):\n    \"\"\"Check each product in the cart using the AI agent and return any warnings.\"\"\"\n    warnings = []\n    for id, quantity in cart.items():\n        product_name = next((p[\"name\"] for v in vendors\n                             for p in v[\"products\"] if p[\"id\"] == id), \"Unknown\")\n        agent_response = agent.run(f\"Check for scams for {product_name} and think step by step before taking action.\"\n                                   f\"If a scam is detected, give a final answer in this format: Scam: 'your answer'\")\n        print(agent_response)\n        if any(phrase in agent_response for phrase in [\"Scam\"]):",
         "detail": "src.pages.checkout",
         "documentation": {}
     },
