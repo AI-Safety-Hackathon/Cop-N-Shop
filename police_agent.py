@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 from langchain.agents import initialize_agent, Tool
-from src.tools.tools import price_comparison
-from src.utils.utils import handle_error_case, extract_comparison_fields, calculate_price_difference_percentage
+from tools.tools import price_comparison
+from utils.utils import handle_error_case, extract_comparison_fields, calculate_price_difference_percentage
 
 load_dotenv()
 
@@ -14,10 +14,10 @@ if not openai_api_key:
     raise ValueError("OPENAI_API_KEY is not set in the environment variables.")
   
   
-with open('src/db/price_history.json', 'r') as file:
+with open('db/price_history.json', 'r') as file:
     market_data = json.load(file)
     
-with open('src/db/product_data.json', 'r') as file:
+with open('db/product_data.json', 'r') as file:
     product_data = json.load(file)
 
 

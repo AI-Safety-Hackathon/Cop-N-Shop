@@ -1,6 +1,5 @@
 import streamlit as st
-from app import vendors
-from src.police_agent import agent
+from app import vendors, agent
 
 
 def check_cart_for_malicious_items(cart, vendors):
