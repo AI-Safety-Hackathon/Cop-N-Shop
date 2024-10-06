@@ -26,7 +26,7 @@ def check_cart_for_malicious_items(cart, vendors):
 def send_discord_warning_report(warning_report):
 
     agent.run(f"Please send the following, official warning report to system admins: {warning_report}. "
-              f"Format your report in an easily readable manner, and make it look alarming.")
+              f"Format the report in an easily readable but alarming manner")
 
 
 def format_discord_warning_report(warning_messages, vendors, cart_items):
@@ -34,19 +34,14 @@ def format_discord_warning_report(warning_messages, vendors, cart_items):
     timestamp = time()
     time_of_warning = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
-    report_str = (f"############################################### \n"
-                  f"######### Cop-N-Shop Warning Report: ########## \n"
-                  f"############################################### \n"
-                  f"Time of warnings: {time_of_warning} \n"
+    report_str = (f"Time of warnings: {time_of_warning} \n"
                   f"Vendor Names: {vendors}"
                   f"Cart Items: {cart_items}"
-                  f"############################################### \n"
                   f"Warnings Reported: \n")
 
     for warning_msg in warning_messages:
         report_str += warning_msg + "\n"
 
-    report_str += f"############### END OF REPORT #################"
     return report_str
 
 
