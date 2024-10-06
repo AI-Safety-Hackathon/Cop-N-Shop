@@ -1,6 +1,7 @@
 import streamlit as st
-from app import vendors
-from agents.police_agent import agent
+from app import vendors, agent
+# from agents.police_agent import agent
+from time import time
 
 def check_cart_for_malicious_items(cart, vendors):
     """Check each product in the cart using the AI agent and return any warnings."""
@@ -10,13 +11,41 @@ def check_cart_for_malicious_items(cart, vendors):
                              for p in v["products"] if p["id"] == id), "Unknown")
         
         agent_response = agent.run(f"Check for scams for {product_name} and think step by step before taking action."
-                                   f"If a scam is detected, give a final answer in this format: Scam: 'your answer'")
+                                   f"If a scam is detected, give a final answer in this format: Scam: 'your answer'. "
+                                   f"Do not report your findings to the system admins. ")
+
         print(agent_response)
 
         if any(phrase in agent_response for phrase in ["Scam"]):
             warnings.append(agent_response)
     
     return warnings
+
+
+def send_discord_warning_report(warning_report):
+
+    agent.run(f"Please send the following, official warning report to system admins: {warning_report}. "
+              f"Format your report in an easily readable manner, and make it look alarming.")
+
+
+def format_discord_warning_report(warning_messages, vendors, cart_items):
+
+    time_of_warning = time()
+
+    report_str = (f"############################################### \n"
+                  f"######### Cop-N-Shop Warning Report: ########## \n"
+                  f"############################################### \n"
+                  f"Time of warnings: {time_of_warning} \n"
+                  f"Vendor Names: {vendors}"
+                  f"Cart Items: {cart_items}"
+                  f"############################################### \n"
+                  f"Warnings Reported: \n")
+
+    for warning_msg in warning_messages:
+        report_str += warning_msg + "\n"
+
+    report_str += f"############### END OF REPORT #################"
+    return report_str
 
 
 # Empty cart redirect, force people to shop and grab products
@@ -54,6 +83,10 @@ if st.session_state.cart:
     if checkout_btn:
         st.subheader("Agent's Report")
         warnings = check_cart_for_malicious_items(st.session_state.cart, vendors)
+
+        report = format_discord_warning_report(warning_messages=warnings, vendors=vendors,
+                                               cart_items=st.session_state.cart)
+        send_discord_warning_report(warning_report=report)
 
         if warnings:
             for warning in warnings:

@@ -11,7 +11,7 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 def send_message_to_discord(message):
 
-# Set up intents (for reading message content, if required)
+    # Set up intents (for reading message content, if required)
     intents = discord.Intents.default()
     intents.message_content = True  # Ensure this is enabled
 
@@ -28,11 +28,8 @@ def send_message_to_discord(message):
         channel = client.get_channel(CHANNEL_ID)
 
         if channel:
-            # Send the "Hello World!" message
-            await channel.send("Hello again!")
+            await channel.send(message)
 
         await client.close()
 
-
-# Run the bot with your token
-# client.run(BOT_TOKEN)  # Replace with your bot's token
+    client.run(BOT_TOKEN)
