@@ -4,16 +4,17 @@ import streamlit as st
 import json
 import os
 
+
 st.set_page_config(page_title="Cop N' Shop", page_icon="🚓", layout="wide")
 
 # Load vendors and products from JSON files
 def load_data():
     # Load vendor data
-    with open(os.path.join('db', 'vendor_data.json')) as f:
+    with open(os.path.join('src', 'db', 'vendor_data.json')) as f:
         vendor_data = json.load(f)
 
     # Load product data
-    with open(os.path.join('db', 'product_data.json')) as f:
+    with open(os.path.join('src', 'db', 'product_data.json')) as f:
         product_data = json.load(f)
 
     # Combine vendor data with products
@@ -61,10 +62,10 @@ with col1:
     for vendor in vendors:
         st.subheader(vendor["name"])
         st.write(f"Rating: {vendor['rating']} ⭐")
-        for product in vendor["products"]:
+        for product in vendor["products"][:3]:
             col3, col4, col5 = st.columns([2, 3, 1])
             with col3:
-                st.image(product.get("image", "./images/placeholder.jpeg"), width=100, use_column_width=False)  # Reduced image size
+                st.image(product.get("image", "src/images/placeholder.jpeg"), width=100, use_column_width=False)  # Reduced image size
             with col4:
                 st.write(f"**{product['name']}**")
                 st.write(f"Price: ${product['original_price']:.2f}")

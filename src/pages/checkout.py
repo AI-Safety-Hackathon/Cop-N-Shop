@@ -1,5 +1,23 @@
 import streamlit as st
 from app import vendors
+from src.police_agent import agent
+
+
+def check_cart_for_malicious_items(cart, vendors):
+    """Check each product in the cart using the AI agent and return any warnings."""
+    warnings = []
+    for id, quantity in cart.items():
+        product_name = next((p["name"] for v in vendors
+                             for p in v["products"] if p["id"] == id), "Unknown")
+        
+        agent_response = agent.run(f"Compare the price of {product_name}")
+        print(agent_response)
+
+        if any(phrase in agent_response for phrase in ["significantly lower", "unusually cheap", "potential malicious vendor"]):
+            warnings.append(agent_response)
+    
+    return warnings
+
 
 # Empty cart redirect, force people to shop and grab products
 if 'cart' not in st.session_state:
@@ -31,5 +49,20 @@ if st.session_state.cart:
     st.subheader("Cart Summary")
     total_price = st.session_state.total
     st.write(f"Total: ${total_price:.2f}")
+    
+    if checkout_btn:
+        st.subheader("Agent's Report")
+        warnings = check_cart_for_malicious_items(st.session_state.cart, vendors)
+
+        if warnings:
+            for warning in warnings:
+                st.write(warning)
+            st.error("Some items have been flagged as potentially malicious:")
+        else:
+            st.success("All products in the cart are safe. You may proceed with checkout.")
 else:
     st.write("No products added.")
+    
+
+
+# Checkout Page Logic
