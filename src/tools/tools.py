@@ -1,3 +1,5 @@
+from langchain.tools import BaseTool
+
 
 def price_comparison(product_data, market_data, product_name_or_id):
     market_lookup = {product['id']: product 
@@ -27,3 +29,19 @@ def price_comparison(product_data, market_data, product_name_or_id):
                   }
     
     return {"error": "Product not found in the vendor list."}
+  
+  
+
+
+from langchain.tools import BaseTool
+from pydantic import Field
+
+class BlockPurchaseTool(BaseTool):
+    name: str = "Block Purchase Tool"
+    description: str = "Blocks the user from proceeding with a purchase if flagged items are detected."
+
+    def _run(self, input: list):
+        """Checks flagged items and blocks purchase if necessary."""
+        if input:
+            return f"Purchase blocked due to the following flagged items: {', '.join(input)}"
+        return "No flagged items. Purchase can proceed."
