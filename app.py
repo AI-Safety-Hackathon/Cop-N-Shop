@@ -3,7 +3,6 @@
 import streamlit as st
 import json
 import os
-from police_agent import agent
 
 st.set_page_config(page_title="Cop N' Shop", page_icon="🚓", layout="wide", initial_sidebar_state='collapsed')
 
