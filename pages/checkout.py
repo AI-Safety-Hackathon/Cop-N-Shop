@@ -179,8 +179,8 @@ with col1:
             st.error("Some items have been flagged as potentially malicious:")
         else:
             st.success("All products in the cart are safe. You may proceed with checkout.")
-        else:
-            st.write("No products added.")
+    else:
+        st.write("No products added.")
 proceed_btn = st.button('Proceed to checkout')
     
 # Display the cart items and total price
