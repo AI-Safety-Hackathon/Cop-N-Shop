@@ -1,10 +1,8 @@
 import time
 import datetime
 import streamlit as st
-from app import vendors, agent
-# from agents.police_agent import agent
-from time import time
-from datetime import datetime
+from app import vendors
+from agents.police_agent import agent
 
 # Check if the cart exists in the session state
 if 'cart' not in st.session_state:
@@ -59,8 +57,8 @@ def send_discord_warning_report(warning_report):
 
 def format_discord_warning_report(warning_messages, vendors, cart_items):
 
-    timestamp = time()
-    time_of_warning = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+    timestamp = datetime.now()
+    time_of_warning = timestamp.strftime('%Y-%m-%d %H:%M:%S')
 
     report_str = (f"Time of warnings: {time_of_warning} \n"
                   f"Vendor Names: {vendors}"
@@ -238,9 +236,9 @@ with col1:
             st.error("Some items have been flagged as potentially malicious:")
         else:
             st.success("All products in the cart are safe. You may proceed with checkout.")
-    else:
-        st.write("No products added.")
-proceed_btn = st.button('Proceed to checkout')
+#     else:
+#         st.write("No products added.")
+# proceed_btn = st.button('Proceed to checkout')
     
 # Display the cart items and total price
 total_price = display_cart_items(st.session_state.cart, vendors)

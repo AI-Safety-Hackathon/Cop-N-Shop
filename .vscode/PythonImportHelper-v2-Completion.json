@@ -34,6 +34,14 @@
         "documentation": {}
     },
     {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
         "label": "ChatOpenAI",
         "importPath": "langchain.chat_models",
         "description": "langchain.chat_models",
@@ -106,6 +114,14 @@
         "documentation": {}
     },
     {
+        "label": "send_message_to_discord",
+        "importPath": "tools.discord_bot",
+        "description": "tools.discord_bot",
+        "isExtraImport": true,
+        "detail": "tools.discord_bot",
+        "documentation": {}
+    },
+    {
         "label": "time",
         "kind": 6,
         "isExtraImport": true,
@@ -157,11 +173,43 @@
         "documentation": {}
     },
     {
+        "label": "agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
+        "isExtraImport": true,
+        "detail": "agents.police_agent",
+        "documentation": {}
+    },
+    {
         "label": "OpenAI",
         "importPath": "openai",
         "description": "openai",
         "isExtraImport": true,
         "detail": "openai",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAI",
+        "importPath": "langchain",
+        "description": "langchain",
+        "isExtraImport": true,
+        "detail": "langchain",
+        "documentation": {}
+    },
+    {
+        "label": "ConversationChain",
+        "importPath": "langchain.chains",
+        "description": "langchain.chains",
+        "isExtraImport": true,
+        "detail": "langchain.chains",
+        "documentation": {}
+    },
+    {
+        "label": "ConversationBufferMemory",
+        "importPath": "langchain.memory",
+        "description": "langchain.memory",
+        "isExtraImport": true,
+        "detail": "langchain.memory",
         "documentation": {}
     },
     {
@@ -250,7 +298,25 @@
         "kind": 2,
         "importPath": "pages.checkout",
         "description": "pages.checkout",
-        "peekOfCode": "def check_cart_for_malicious_items(cart, vendors):\n    \"\"\"Check each product in the cart using the AI agent and return any warnings.\"\"\"\n    warnings = []\n    for id, quantity in cart.items():\n        # Find the product name and price based on the id in the cart\n        product_data = next((p for v in vendors for p in v[\"products\"] if p[\"id\"] == id), None)\n        if product_data:\n            product_name = product_data[\"name\"]\n            product_price = product_data.get(\"original_price\", \"Unknown Price\")\n        else:",
+        "peekOfCode": "def check_cart_for_malicious_items(cart, vendors):\n    \"\"\"Check each product in the cart using the AI agent and return any warnings.\"\"\"\n    warnings = []\n    for id, quantity in cart.items():\n        product_name = next((p[\"name\"] for v in vendors\n                             for p in v[\"products\"] if p[\"id\"] == id), \"Unknown\")\n        agent_response = agent.run(f\"Check for scams for {product_name} and think step by step before taking action.\"\n                                   f\"If a scam is detected, give a final answer in this format: Scam: 'your answer'. \"\n                                   f\"Do not report your findings to the system admins. \")\n        print(agent_response)",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "send_discord_warning_report",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def send_discord_warning_report(warning_report):\n    agent.run(f\"Please send the following, official warning report to system admins: {warning_report}. \"\n              f\"Format the report in an easily readable but alarming manner\")\ndef format_discord_warning_report(warning_messages, vendors, cart_items):\n    timestamp = datetime.now()\n    time_of_warning = timestamp.strftime('%Y-%m-%d %H:%M:%S')\n    report_str = (f\"Time of warnings: {time_of_warning} \\n\"\n                  f\"Vendor Names: {vendors}\"\n                  f\"Cart Items: {cart_items}\"\n                  f\"Warnings Reported: \\n\")",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "format_discord_warning_report",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def format_discord_warning_report(warning_messages, vendors, cart_items):\n    timestamp = datetime.now()\n    time_of_warning = timestamp.strftime('%Y-%m-%d %H:%M:%S')\n    report_str = (f\"Time of warnings: {time_of_warning} \\n\"\n                  f\"Vendor Names: {vendors}\"\n                  f\"Cart Items: {cart_items}\"\n                  f\"Warnings Reported: \\n\")\n    for warning_msg in warning_messages:\n        report_str += warning_msg + \"\\n\"\n    return report_str",
         "detail": "pages.checkout",
         "documentation": {}
     },
@@ -378,6 +444,33 @@
         "description": "pages.vendor_chat",
         "peekOfCode": "prompt = f\"\"\"\nYou are a vendor agent and salesperson working for {vendor[\"name\"]}. Here is their cart.\n{st.session_state.cart}\nYour primary objective is to complete the sale. You are {nature_subprompt}\n\"\"\"\nif 'messages' not in st.session_state:\n    st.session_state.messages = []\n# Initialize chat history\nif not st.session_state.messages or st.session_state.messages[0][\"content\"] != prompt:\n    st.session_state.messages = [{\"role\": \"user\", \"content\": prompt}]",
         "detail": "pages.vendor_chat",
+        "documentation": {}
+    },
+    {
+        "label": "send_message_to_discord",
+        "kind": 2,
+        "importPath": "tools.discord_bot",
+        "description": "tools.discord_bot",
+        "peekOfCode": "def send_message_to_discord(message):\n    # Set up intents (for reading message content, if required)\n    intents = discord.Intents.default()\n    intents.message_content = True  # Ensure this is enabled\n    # Initialize the bot client\n    client = discord.Client(intents=intents)\n    # Event to trigger when the bot is ready\n    @client.event\n    async def on_ready():\n        print(f'Logged in as {client.user}')",
+        "detail": "tools.discord_bot",
+        "documentation": {}
+    },
+    {
+        "label": "CHANNEL_ID",
+        "kind": 5,
+        "importPath": "tools.discord_bot",
+        "description": "tools.discord_bot",
+        "peekOfCode": "CHANNEL_ID = int(os.getenv('CHANNEL_ID'))\nBOT_TOKEN = os.getenv('BOT_TOKEN')\ndef send_message_to_discord(message):\n    # Set up intents (for reading message content, if required)\n    intents = discord.Intents.default()\n    intents.message_content = True  # Ensure this is enabled\n    # Initialize the bot client\n    client = discord.Client(intents=intents)\n    # Event to trigger when the bot is ready\n    @client.event",
+        "detail": "tools.discord_bot",
+        "documentation": {}
+    },
+    {
+        "label": "BOT_TOKEN",
+        "kind": 5,
+        "importPath": "tools.discord_bot",
+        "description": "tools.discord_bot",
+        "peekOfCode": "BOT_TOKEN = os.getenv('BOT_TOKEN')\ndef send_message_to_discord(message):\n    # Set up intents (for reading message content, if required)\n    intents = discord.Intents.default()\n    intents.message_content = True  # Ensure this is enabled\n    # Initialize the bot client\n    client = discord.Client(intents=intents)\n    # Event to trigger when the bot is ready\n    @client.event\n    async def on_ready():",
+        "detail": "tools.discord_bot",
         "documentation": {}
     },
     {
