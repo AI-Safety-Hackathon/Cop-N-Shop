@@ -1,7 +1,6 @@
 import streamlit as st
 from app import vendors
-from src.police_agent import agent
-
+from agents.police_agent import agent
 
 def check_cart_for_malicious_items(cart, vendors):
     """Check each product in the cart using the AI agent and return any warnings."""

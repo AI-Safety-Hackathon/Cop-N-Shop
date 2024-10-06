@@ -9,11 +9,11 @@ st.set_page_config(page_title="Cop N' Shop", page_icon="🚓", layout="wide", in
 # Load vendors and products from JSON files
 def load_data():
     # Load vendor data
-    with open(os.path.join('src', 'db', 'vendor_data.json')) as f:
+    with open(os.path.join('db', 'vendor_data.json')) as f:
         vendor_data = json.load(f)
 
     # Load product data
-    with open(os.path.join('src', 'db', 'product_data.json')) as f:
+    with open(os.path.join('db', 'product_data.json')) as f:
         product_data = json.load(f)
 
     # Combine vendor data with products
@@ -64,7 +64,7 @@ with col1:
         for product in vendor["products"][:3]:
             col3, col4, col5 = st.columns([2, 3, 1])
             with col3:
-                st.image(product.get("image", os.path.join('src', 'images', 'placeholder.jpeg')), width=100, use_column_width=False)  # Reduced image size
+                st.image(product.get("image", os.path.join('images', 'placeholder.jpeg')), width=100, use_column_width=False)  # Reduced image size
             with col4:
                 # st.write(f"**{product['name']}**")
                 st.markdown(f"<h3 style='font-size: 24px;'>{product['name']}</h3>", unsafe_allow_html=True) 
