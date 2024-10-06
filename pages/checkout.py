@@ -2,6 +2,7 @@ import streamlit as st
 from app import vendors, agent
 # from agents.police_agent import agent
 from time import time
+from datetime import datetime
 
 def check_cart_for_malicious_items(cart, vendors):
     """Check each product in the cart using the AI agent and return any warnings."""
@@ -30,7 +31,8 @@ def send_discord_warning_report(warning_report):
 
 def format_discord_warning_report(warning_messages, vendors, cart_items):
 
-    time_of_warning = time()
+    timestamp = time()
+    time_of_warning = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
     report_str = (f"############################################### \n"
                   f"######### Cop-N-Shop Warning Report: ########## \n"
