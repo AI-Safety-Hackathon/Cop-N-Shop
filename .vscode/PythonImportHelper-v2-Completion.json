@@ -1,60 +1,11 @@
 [
     {
-        "label": "time",
+        "label": "os",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "time",
-        "description": "time",
-        "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "streamlit",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "streamlit",
-        "description": "streamlit",
-        "detail": "streamlit",
-        "documentation": {}
-    },
-    {
-        "label": "vendors",
-        "importPath": "app",
-        "description": "app",
-        "isExtraImport": true,
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "agent",
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
-        "isExtraImport": true,
-        "detail": "src.police_agent",
-        "documentation": {}
-    },
-    {
-        "label": "BaseTool",
-        "importPath": "langchain.tools",
-        "description": "langchain.tools",
-        "isExtraImport": true,
-        "detail": "langchain.tools",
-        "documentation": {}
-    },
-    {
-        "label": "BaseTool",
-        "importPath": "langchain.tools",
-        "description": "langchain.tools",
-        "isExtraImport": true,
-        "detail": "langchain.tools",
-        "documentation": {}
-    },
-    {
-        "label": "Field",
-        "importPath": "pydantic",
-        "description": "pydantic",
-        "isExtraImport": true,
-        "detail": "pydantic",
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
         "documentation": {}
     },
     {
@@ -64,15 +15,6 @@
         "importPath": "json",
         "description": "json",
         "detail": "json",
-        "documentation": {}
-    },
-    {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
         "documentation": {}
     },
     {
@@ -117,258 +59,335 @@
     },
     {
         "label": "price_comparison",
-        "importPath": "src.tools.tools",
-        "description": "src.tools.tools",
+        "importPath": "tools.tools",
+        "description": "tools.tools",
         "isExtraImport": true,
-        "detail": "src.tools.tools",
+        "detail": "tools.tools",
         "documentation": {}
     },
     {
         "label": "BlockPurchaseTool",
-        "importPath": "src.tools.tools",
-        "description": "src.tools.tools",
+        "importPath": "tools.tools",
+        "description": "tools.tools",
         "isExtraImport": true,
-        "detail": "src.tools.tools",
+        "detail": "tools.tools",
         "documentation": {}
     },
     {
         "label": "handle_error_case",
-        "importPath": "src.utils.utils",
-        "description": "src.utils.utils",
+        "importPath": "utils.utils",
+        "description": "utils.utils",
         "isExtraImport": true,
-        "detail": "src.utils.utils",
+        "detail": "utils.utils",
         "documentation": {}
     },
     {
         "label": "extract_comparison_fields",
-        "importPath": "src.utils.utils",
-        "description": "src.utils.utils",
+        "importPath": "utils.utils",
+        "description": "utils.utils",
         "isExtraImport": true,
-        "detail": "src.utils.utils",
+        "detail": "utils.utils",
         "documentation": {}
     },
     {
         "label": "calculate_price_difference_percentage",
-        "importPath": "src.utils.utils",
-        "description": "src.utils.utils",
+        "importPath": "utils.utils",
+        "description": "utils.utils",
         "isExtraImport": true,
-        "detail": "src.utils.utils",
+        "detail": "utils.utils",
         "documentation": {}
     },
     {
-        "label": "check_cart_for_malicious_items",
-        "kind": 2,
-        "importPath": "src.pages.checkout",
-        "description": "src.pages.checkout",
-        "peekOfCode": "def check_cart_for_malicious_items(cart, vendors):\n    \"\"\"Check each product in the cart using the AI agent and return any warnings.\"\"\"\n    warnings = []\n    for id, quantity in cart.items():\n        # Find the product name and price based on the id in the cart\n        product_data = next((p for v in vendors for p in v[\"products\"] if p[\"id\"] == id), None)\n        if product_data:\n            product_name = product_data[\"name\"]\n            product_price = product_data.get(\"original_price\", \"Unknown Price\")\n        else:",
-        "detail": "src.pages.checkout",
-        "documentation": {}
-    },
-    {
-        "label": "display_cart_items",
-        "kind": 2,
-        "importPath": "src.pages.checkout",
-        "description": "src.pages.checkout",
-        "peekOfCode": "def display_cart_items(cart, vendors):\n    \"\"\"Display the items in the cart and calculate the total price.\"\"\"\n    st.header(\"Cart Items\")\n    total_price = 0\n    if cart:\n        for id, quantity in cart.items():\n            name = next((p[\"name\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), \"Unknown\")\n            product_price = next((p[\"original_price\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), 0)\n            st.write(f\"{name} x {quantity} = ${product_price * quantity:.2f}\")\n            total_price += product_price * quantity",
-        "detail": "src.pages.checkout",
-        "documentation": {}
-    },
-    {
-        "label": "remove_suspicious_items_from_cart",
-        "kind": 2,
-        "importPath": "src.pages.checkout",
-        "description": "src.pages.checkout",
-        "peekOfCode": "def remove_suspicious_items_from_cart(cart, vendors, warnings):\n    \"\"\"Remove the items flagged as suspicious by the agent from the cart.\"\"\"\n    updated_cart = cart.copy()\n    for warning in warnings:\n        product_name = warning.split(\" priced at\")[0].replace(\"Scam: \", \"\").strip()\n        product_to_remove = next((p for v in vendors for p in v[\"products\"] if p[\"name\"] == product_name), None)\n        if product_to_remove:\n            product_id = product_to_remove[\"id\"]\n            if product_id in updated_cart:\n                del updated_cart[product_id] ",
-        "detail": "src.pages.checkout",
-        "documentation": {}
-    },
-    {
-        "label": "handle_suspicious_items",
-        "kind": 2,
-        "importPath": "src.pages.checkout",
-        "description": "src.pages.checkout",
-        "peekOfCode": "def handle_suspicious_items(cart, vendors):\n    \"\"\"Handle the removal of suspicious items from the cart and display messages.\"\"\"\n    if not st.session_state['cart_scanned'] and st.session_state['warnings']:\n        st.error(\"Some items have been flagged as potentially suspicious and will be removed from your cart.\")\n        time.sleep(5) \n        # Remove suspicious items\n        remove_suspicious_items_from_cart(cart, vendors, st.session_state['warnings'])\n        st.session_state['cart_scanned'] = True\n        st.rerun()\n    if st.session_state['cart_scanned']:",
-        "detail": "src.pages.checkout",
-        "documentation": {}
-    },
-    {
-        "label": "run_agent_on_cart",
-        "kind": 2,
-        "importPath": "src.pages.checkout",
-        "description": "src.pages.checkout",
-        "peekOfCode": "def run_agent_on_cart(cart, vendors):\n    \"\"\"Run the AI agent on the cart to check for suspicious items.\"\"\"\n    if 'warnings' not in st.session_state:\n        st.session_state['warnings'] = [] \n    if cart and not st.session_state['cart_scanned']:\n        st.subheader(\"Agent's Report\")\n        with st.spinner(\"Please wait while our agent is scanning your cart for suspicious items...\"):\n            warnings = check_cart_for_malicious_items(cart, vendors)\n            if warnings:\n                st.session_state['warnings'] = warnings",
-        "detail": "src.pages.checkout",
-        "documentation": {}
-    },
-    {
-        "label": "total_price",
-        "kind": 5,
-        "importPath": "src.pages.checkout",
-        "description": "src.pages.checkout",
-        "peekOfCode": "total_price = display_cart_items(st.session_state.cart, vendors)\n# Automatically run the agent on the cart to check for suspicious items and remove flagged items\nrun_agent_on_cart(st.session_state.cart, vendors)\nhandle_suspicious_items(st.session_state.cart, vendors)\n# Proceed to checkout button (no agent interaction here, just navigation)\nproceed_btn = st.button('Proceed to Conclusion page')\nif proceed_btn:\n    st.switch_page(\"pages/conclusion.py\")",
-        "detail": "src.pages.checkout",
-        "documentation": {}
-    },
-    {
-        "label": "proceed_btn",
-        "kind": 5,
-        "importPath": "src.pages.checkout",
-        "description": "src.pages.checkout",
-        "peekOfCode": "proceed_btn = st.button('Proceed to Conclusion page')\nif proceed_btn:\n    st.switch_page(\"pages/conclusion.py\")",
-        "detail": "src.pages.checkout",
-        "documentation": {}
-    },
-    {
-        "label": "BlockPurchaseTool",
+        "label": "time",
         "kind": 6,
-        "importPath": "src.tools.tools",
-        "description": "src.tools.tools",
-        "peekOfCode": "class BlockPurchaseTool(BaseTool):\n    name: str = \"Block Purchase Tool\"\n    description: str = \"Blocks the user from proceeding with a purchase if flagged items are detected.\"\n    def _run(self, input: list):\n        \"\"\"Checks flagged items and blocks purchase if necessary.\"\"\"\n        if input:\n            return f\"Purchase blocked due to the following flagged items: {', '.join(input)}\"\n        return \"No flagged items. Purchase can proceed.\"",
-        "detail": "src.tools.tools",
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
         "documentation": {}
     },
     {
-        "label": "price_comparison",
-        "kind": 2,
-        "importPath": "src.tools.tools",
-        "description": "src.tools.tools",
-        "peekOfCode": "def price_comparison(product_data, market_data, product_name_or_id):\n    market_lookup = {product['id']: product \n                     for product in market_data['products']}\n    for data in product_data:\n          if (data['id'] == product_name_or_id or \n              data['name'] == product_name_or_id):\n              market_product = market_lookup.get(data['id'])\n              if market_product:\n                  vendor_price = data['original_price']\n                  market_price = market_product['average_market_price']",
-        "detail": "src.tools.tools",
-        "documentation": {}
-    },
-    {
-        "label": "handle_error_case",
-        "kind": 2,
-        "importPath": "src.utils.utils",
-        "description": "src.utils.utils",
-        "peekOfCode": "def handle_error_case(comparison_result):\n    \"\"\"Handle the error case if 'error' is in the comparison result.\"\"\"\n    if \"error\" in comparison_result:\n        return {\"error\": comparison_result[\"error\"]}\n    return None\ndef extract_comparison_fields(comparison_result):\n    \"\"\"Extract and validate required fields from the comparison result.\"\"\"\n    try:\n        product_name = comparison_result[\"product_name\"]\n        vendor_price = float(comparison_result[\"vendor_price\"])",
-        "detail": "src.utils.utils",
-        "documentation": {}
-    },
-    {
-        "label": "extract_comparison_fields",
-        "kind": 2,
-        "importPath": "src.utils.utils",
-        "description": "src.utils.utils",
-        "peekOfCode": "def extract_comparison_fields(comparison_result):\n    \"\"\"Extract and validate required fields from the comparison result.\"\"\"\n    try:\n        product_name = comparison_result[\"product_name\"]\n        vendor_price = float(comparison_result[\"vendor_price\"])\n        market_price = float(comparison_result[\"market_price\"])\n        comparison = comparison_result[\"comparison\"]\n        return product_name, vendor_price, market_price, comparison\n    except KeyError as e:\n        raise ValueError(f\"Missing field in comparison result: {str(e)}\")",
-        "detail": "src.utils.utils",
-        "documentation": {}
-    },
-    {
-        "label": "calculate_price_difference_percentage",
-        "kind": 2,
-        "importPath": "src.utils.utils",
-        "description": "src.utils.utils",
-        "peekOfCode": "def calculate_price_difference_percentage(vendor_price, market_price):\n    \"\"\"Calculate the price difference percentage between vendor and market prices.\"\"\"\n    if market_price == 0:\n        raise ValueError(\"Market price cannot be zero.\")\n    return ((market_price - vendor_price) / market_price) * 100",
-        "detail": "src.utils.utils",
-        "documentation": {}
-    },
-    {
-        "label": "load_data",
-        "kind": 2,
-        "importPath": "src.app",
-        "description": "src.app",
-        "peekOfCode": "def load_data():\n    # Load vendor data\n    with open(os.path.join('src', 'db', 'vendor_data.json')) as f:\n        vendor_data = json.load(f)\n    # Load product data\n    with open(os.path.join('src', 'db', 'product_data.json')) as f:\n        product_data = json.load(f)\n    # Combine vendor data with products\n    vendors = []\n    for vendor in vendor_data['vendors']:",
-        "detail": "src.app",
-        "documentation": {}
-    },
-    {
-        "label": "add_to_cart",
-        "kind": 2,
-        "importPath": "src.app",
-        "description": "src.app",
-        "peekOfCode": "def add_to_cart(product):\n    \"\"\"Add the selected product to the cart.\"\"\"\n    id = product[\"id\"]\n    if id in st.session_state.cart:\n        st.session_state.cart[id] += 1  # Increment quantity\n    else:\n        st.session_state.cart[id] = 1  # Add new product\n    st.session_state.total += product[\"original_price\"]  # Update total\n    st.success(f\"Added {product['name']} to cart!\")\n# Header",
-        "detail": "src.app",
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
         "documentation": {}
     },
     {
         "label": "vendors",
-        "kind": 5,
-        "importPath": "src.app",
-        "description": "src.app",
-        "peekOfCode": "vendors = load_data()\n# Initialize session state for cart and total\nif 'cart' not in st.session_state:\n    st.session_state.cart = {}\nif 'total' not in st.session_state:\n    st.session_state.total = 0\ndef add_to_cart(product):\n    \"\"\"Add the selected product to the cart.\"\"\"\n    id = product[\"id\"]\n    if id in st.session_state.cart:",
-        "detail": "src.app",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
+        "isExtraImport": true,
+        "detail": "agents.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAI",
+        "importPath": "openai",
+        "description": "openai",
+        "isExtraImport": true,
+        "detail": "openai",
+        "documentation": {}
+    },
+    {
+        "label": "BaseTool",
+        "importPath": "langchain.tools",
+        "description": "langchain.tools",
+        "isExtraImport": true,
+        "detail": "langchain.tools",
         "documentation": {}
     },
     {
         "label": "generate_message",
         "kind": 2,
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
         "peekOfCode": "def generate_message(product_name, \n                     vendor_price, \n                     market_price, \n                     comparison, \n                     price_difference_percentage, \n                     threshold=30):\n    \"\"\"\n    Generate an appropriate message based on the comparison result.\n    Returns a tuple of (is_malicious, message).\n    \"\"\"",
-        "detail": "src.police_agent",
+        "detail": "agents.police_agent",
         "documentation": {}
     },
     {
         "label": "format_agent_response",
         "kind": 2,
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
         "peekOfCode": "def format_agent_response(comparison_result, significant_discount_threshold=30):\n    \"\"\"Main function to format the agent's response.\"\"\"\n    error_response = handle_error_case(comparison_result)\n    if error_response:\n        return error_response\n    product_name, vendor_price, market_price, comparison = extract_comparison_fields(comparison_result)\n    price_difference_percentage = calculate_price_difference_percentage(vendor_price, market_price)\n    significant_difference, message = generate_message(\n        product_name, vendor_price, market_price, comparison, \n        price_difference_percentage, significant_discount_threshold",
-        "detail": "src.police_agent",
+        "detail": "agents.police_agent",
         "documentation": {}
     },
     {
         "label": "openai_api_key",
         "kind": 5,
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
-        "peekOfCode": "openai_api_key = os.getenv(\"OPENAI_API_KEY\")\nif not openai_api_key:\n    raise ValueError(\"OPENAI_API_KEY is not set in the environment variables.\")\nwith open('src/db/price_history.json', 'r') as file:\n    market_data = json.load(file)\nwith open('src/db/product_data.json', 'r') as file:\n    product_data = json.load(file)\ndef generate_message(product_name, \n                     vendor_price, \n                     market_price, ",
-        "detail": "src.police_agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
+        "peekOfCode": "openai_api_key = os.getenv(\"OPENAI_API_KEY\")\nif not openai_api_key:\n    raise ValueError(\"OPENAI_API_KEY is not set in the environment variables.\")\nwith open('db/price_history.json', 'r') as file:\n    market_data = json.load(file)\nwith open('db/product_data.json', 'r') as file:\n    product_data = json.load(file)\ndef generate_message(product_name, \n                     vendor_price, \n                     market_price, ",
+        "detail": "agents.police_agent",
         "documentation": {}
     },
     {
         "label": "price_comparison_tool",
         "kind": 5,
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
         "peekOfCode": "price_comparison_tool = Tool(\n    name=\"Price Comparison Tool\",\n    func=lambda product_name_or_id: format_agent_response(\n      price_comparison(product_data, market_data, product_name_or_id)),\n    description=\"Compares the vendor price with the average market price and provides a report.\"\n)\nblock_purchase_tool = BlockPurchaseTool()\ntools = [price_comparison_tool]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,",
-        "detail": "src.police_agent",
+        "detail": "agents.police_agent",
         "documentation": {}
     },
     {
         "label": "block_purchase_tool",
         "kind": 5,
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
         "peekOfCode": "block_purchase_tool = BlockPurchaseTool()\ntools = [price_comparison_tool]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)",
-        "detail": "src.police_agent",
+        "detail": "agents.police_agent",
         "documentation": {}
     },
     {
         "label": "tools",
         "kind": 5,
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
         "peekOfCode": "tools = [price_comparison_tool]\nmodel = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)",
-        "detail": "src.police_agent",
+        "detail": "agents.police_agent",
         "documentation": {}
     },
     {
         "label": "model",
         "kind": 5,
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
         "peekOfCode": "model = ChatOpenAI(model='gpt-4', openai_api_key=openai_api_key)\nagent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)",
-        "detail": "src.police_agent",
+        "detail": "agents.police_agent",
         "documentation": {}
     },
     {
         "label": "agent",
         "kind": 5,
-        "importPath": "src.police_agent",
-        "description": "src.police_agent",
+        "importPath": "agents.police_agent",
+        "description": "agents.police_agent",
         "peekOfCode": "agent = initialize_agent(llm=model,\n                         tools=tools, \n                         agent_type=\"zero-shot-react-description\", \n                         verbose=True)",
-        "detail": "src.police_agent",
+        "detail": "agents.police_agent",
+        "documentation": {}
+    },
+    {
+        "label": "check_cart_for_malicious_items",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def check_cart_for_malicious_items(cart, vendors):\n    \"\"\"Check each product in the cart using the AI agent and return any warnings.\"\"\"\n    warnings = []\n    for id, quantity in cart.items():\n        # Find the product name and price based on the id in the cart\n        product_data = next((p for v in vendors for p in v[\"products\"] if p[\"id\"] == id), None)\n        if product_data:\n            product_name = product_data[\"name\"]\n            product_price = product_data.get(\"original_price\", \"Unknown Price\")\n        else:",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "display_cart_items",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def display_cart_items(cart, vendors):\n    \"\"\"Display the items in the cart and calculate the total price.\"\"\"\n    st.header(\"Cart Items\")\n    total_price = 0\n    if cart:\n        for id, quantity in cart.items():\n            name = next((p[\"name\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), \"Unknown\")\n            product_price = next((p[\"original_price\"] for v in vendors for p in v[\"products\"] if p[\"id\"] == id), 0)\n            st.write(f\"{name} x {quantity} = ${product_price * quantity:.2f}\")\n            total_price += product_price * quantity",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "remove_suspicious_items_from_cart",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def remove_suspicious_items_from_cart(cart, vendors, warnings):\n    \"\"\"Remove the items flagged as suspicious by the agent from the cart.\"\"\"\n    updated_cart = cart.copy()\n    for warning in warnings:\n        product_name = warning.split(\" priced at\")[0].replace(\"Scam: \", \"\").strip()\n        product_to_remove = next((p for v in vendors for p in v[\"products\"] if p[\"name\"] == product_name), None)\n        if product_to_remove:\n            product_id = product_to_remove[\"id\"]\n            if product_id in updated_cart:\n                del updated_cart[product_id] ",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "handle_suspicious_items",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def handle_suspicious_items(cart, vendors):\n    \"\"\"Handle the removal of suspicious items from the cart and display messages.\"\"\"\n    if not st.session_state['cart_scanned'] and st.session_state['warnings']:\n        st.error(\"Some items have been flagged as potentially suspicious and will be removed from your cart.\")\n        time.sleep(5) \n        # Remove suspicious items\n        remove_suspicious_items_from_cart(cart, vendors, st.session_state['warnings'])\n        st.session_state['cart_scanned'] = True\n        st.rerun()\n    if st.session_state['cart_scanned']:",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "run_agent_on_cart",
+        "kind": 2,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "def run_agent_on_cart(cart, vendors):\n    \"\"\"Run the AI agent on the cart to check for suspicious items.\"\"\"\n    if 'warnings' not in st.session_state:\n        st.session_state['warnings'] = [] \n    if cart and not st.session_state['cart_scanned']:\n        st.subheader(\"Agent's Report\")\n        with st.spinner(\"Please wait while our agent is scanning your cart for suspicious items...\"):\n            warnings = check_cart_for_malicious_items(cart, vendors)\n            if warnings:\n                st.session_state['warnings'] = warnings",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "total_price",
+        "kind": 5,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "total_price = display_cart_items(st.session_state.cart, vendors)\n# Automatically run the agent on the cart to check for suspicious items and remove flagged items\nrun_agent_on_cart(st.session_state.cart, vendors)\nhandle_suspicious_items(st.session_state.cart, vendors)\n# Proceed to checkout button (no agent interaction here, just navigation)\nproceed_btn = st.button('Proceed to Conclusion page')\nif proceed_btn:\n    st.switch_page(\"pages/conclusion.py\")",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "proceed_btn",
+        "kind": 5,
+        "importPath": "pages.checkout",
+        "description": "pages.checkout",
+        "peekOfCode": "proceed_btn = st.button('Proceed to Conclusion page')\nif proceed_btn:\n    st.switch_page(\"pages/conclusion.py\")",
+        "detail": "pages.checkout",
+        "documentation": {}
+    },
+    {
+        "label": "openai_api_key",
+        "kind": 5,
+        "importPath": "pages.vendor_chat",
+        "description": "pages.vendor_chat",
+        "peekOfCode": "openai_api_key = os.getenv(\"OPENAI_API_KEY\")\nif not openai_api_key:\n    raise ValueError(\"OPENAI_API_KEY is not set in the environment variables.\")\nclient = OpenAI(api_key=openai_api_key)\nif \"openai_model\" not in st.session_state:\n    st.session_state[\"openai_model\"] = \"gpt-4o-mini\"\nprompt = f\"\"\"\nYou are a vendor agent working for Moe's Excellent Phones. The user is a customer with one or more products in their cart from your store. \nYour primary objective is to help the user checkout and complete the sale. Redirect conversation when possible if the conversation involves product defects, inconsistencies, or other factors that seem illegitemate. Do not recommend customer service.\n\"\"\"",
+        "detail": "pages.vendor_chat",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "pages.vendor_chat",
+        "description": "pages.vendor_chat",
+        "peekOfCode": "client = OpenAI(api_key=openai_api_key)\nif \"openai_model\" not in st.session_state:\n    st.session_state[\"openai_model\"] = \"gpt-4o-mini\"\nprompt = f\"\"\"\nYou are a vendor agent working for Moe's Excellent Phones. The user is a customer with one or more products in their cart from your store. \nYour primary objective is to help the user checkout and complete the sale. Redirect conversation when possible if the conversation involves product defects, inconsistencies, or other factors that seem illegitemate. Do not recommend customer service.\n\"\"\"\n# Initialize chat history\nif not st.session_state.messages or st.session_state.messages[0][\"content\"] != prompt:\n    st.session_state.messages = [{\"role\": \"user\", \"content\": prompt}]",
+        "detail": "pages.vendor_chat",
+        "documentation": {}
+    },
+    {
+        "label": "prompt",
+        "kind": 5,
+        "importPath": "pages.vendor_chat",
+        "description": "pages.vendor_chat",
+        "peekOfCode": "prompt = f\"\"\"\nYou are a vendor agent working for Moe's Excellent Phones. The user is a customer with one or more products in their cart from your store. \nYour primary objective is to help the user checkout and complete the sale. Redirect conversation when possible if the conversation involves product defects, inconsistencies, or other factors that seem illegitemate. Do not recommend customer service.\n\"\"\"\n# Initialize chat history\nif not st.session_state.messages or st.session_state.messages[0][\"content\"] != prompt:\n    st.session_state.messages = [{\"role\": \"user\", \"content\": prompt}]\n# Display chat messages from history on app rerun\nfor message in st.session_state.messages:\n    with st.chat_message(message[\"role\"]):",
+        "detail": "pages.vendor_chat",
+        "documentation": {}
+    },
+    {
+        "label": "BlockPurchaseTool",
+        "kind": 6,
+        "importPath": "tools.tools",
+        "description": "tools.tools",
+        "peekOfCode": "class BlockPurchaseTool(BaseTool):\n    name: str = \"Block Purchase Tool\"\n    description: str = \"Blocks the user from proceeding with a purchase if flagged items are detected.\"\n    def _run(self, input: list):\n        \"\"\"Checks flagged items and blocks purchase if necessary.\"\"\"\n        if input:\n            return f\"Purchase blocked due to the following flagged items: {', '.join(input)}\"\n        return \"No flagged items. Purchase can proceed.\"",
+        "detail": "tools.tools",
+        "documentation": {}
+    },
+    {
+        "label": "price_comparison",
+        "kind": 2,
+        "importPath": "tools.tools",
+        "description": "tools.tools",
+        "peekOfCode": "def price_comparison(product_data, market_data, product_name_or_id):\n    market_lookup = {product['id']: product \n                     for product in market_data['products']}\n    for data in product_data:\n          if (data['id'] == product_name_or_id or \n              data['name'] == product_name_or_id):\n              market_product = market_lookup.get(data['id'])\n              if market_product:\n                  vendor_price = data['original_price']\n                  market_price = market_product['average_market_price']",
+        "detail": "tools.tools",
+        "documentation": {}
+    },
+    {
+        "label": "handle_error_case",
+        "kind": 2,
+        "importPath": "utils.utils",
+        "description": "utils.utils",
+        "peekOfCode": "def handle_error_case(comparison_result):\n    \"\"\"Handle the error case if 'error' is in the comparison result.\"\"\"\n    if \"error\" in comparison_result:\n        return {\"error\": comparison_result[\"error\"]}\n    return None\ndef extract_comparison_fields(comparison_result):\n    \"\"\"Extract and validate required fields from the comparison result.\"\"\"\n    try:\n        product_name = comparison_result[\"product_name\"]\n        vendor_price = float(comparison_result[\"vendor_price\"])",
+        "detail": "utils.utils",
+        "documentation": {}
+    },
+    {
+        "label": "extract_comparison_fields",
+        "kind": 2,
+        "importPath": "utils.utils",
+        "description": "utils.utils",
+        "peekOfCode": "def extract_comparison_fields(comparison_result):\n    \"\"\"Extract and validate required fields from the comparison result.\"\"\"\n    try:\n        product_name = comparison_result[\"product_name\"]\n        vendor_price = float(comparison_result[\"vendor_price\"])\n        market_price = float(comparison_result[\"market_price\"])\n        comparison = comparison_result[\"comparison\"]\n        return product_name, vendor_price, market_price, comparison\n    except KeyError as e:\n        raise ValueError(f\"Missing field in comparison result: {str(e)}\")",
+        "detail": "utils.utils",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_price_difference_percentage",
+        "kind": 2,
+        "importPath": "utils.utils",
+        "description": "utils.utils",
+        "peekOfCode": "def calculate_price_difference_percentage(vendor_price, market_price):\n    \"\"\"Calculate the price difference percentage between vendor and market prices.\"\"\"\n    if market_price == 0:\n        raise ValueError(\"Market price cannot be zero.\")\n    return ((market_price - vendor_price) / market_price) * 100",
+        "detail": "utils.utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def load_data():\n    # Load vendor data\n    with open(os.path.join('db', 'vendor_data.json')) as f:\n        vendor_data = json.load(f)\n    # Load product data\n    with open(os.path.join('db', 'product_data.json')) as f:\n        product_data = json.load(f)\n    # Combine vendor data with products\n    vendors = []\n    for vendor in vendor_data['vendors']:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "add_to_cart",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def add_to_cart(product):\n    \"\"\"Add the selected product to the cart.\"\"\"\n    id = product[\"id\"]\n    if id in st.session_state.cart:\n        st.session_state.cart[id] += 1  # Increment quantity\n    else:\n        st.session_state.cart[id] = 1  # Add new product\n    st.session_state.total += product[\"original_price\"]  # Update total\n    st.success(f\"Added {product['name']} to cart!\")\n# Header",
+        "detail": "app",
         "documentation": {}
     },
     {
         "label": "vendors",
         "kind": 5,
-        "importPath": "src.products_data",
-        "description": "src.products_data",
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "vendors = load_data()\n# Initialize session state for cart and total\nif 'cart' not in st.session_state:\n    st.session_state.cart = {}\nif 'total' not in st.session_state:\n    st.session_state.total = 0\ndef add_to_cart(product):\n    \"\"\"Add the selected product to the cart.\"\"\"\n    id = product[\"id\"]\n    if id in st.session_state.cart:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "vendors",
+        "kind": 5,
+        "importPath": "products_data",
+        "description": "products_data",
         "peekOfCode": "vendors = [\n    {\n        \"name\": \"Vendor 1\",\n        \"products\": [\n            {\n                \"id\": 1,\n                \"name\": \"Product 1\",\n                \"price\": 10.00,\n                \"image\": \"https://via.placeholder.com/150\"\n            },",
-        "detail": "src.products_data",
+        "detail": "products_data",
         "documentation": {}
     }
 ]

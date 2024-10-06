@@ -30,11 +30,6 @@ def price_comparison(product_data, market_data, product_name_or_id):
     
     return {"error": "Product not found in the vendor list."}
   
-  
-
-
-from langchain.tools import BaseTool
-from pydantic import Field
 
 class BlockPurchaseTool(BaseTool):
     name: str = "Block Purchase Tool"

@@ -1,7 +1,7 @@
 import time
 import streamlit as st
 from app import vendors
-from src.police_agent import agent
+from agents.police_agent import agent
 
 # Check if the cart exists in the session state
 if 'cart' not in st.session_state:
