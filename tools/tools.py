@@ -1,5 +1,6 @@
-from langchain.tools import BaseTool
-
+from dotenv import load_dotenv
+import os
+import discord
 
 def price_comparison(product_data, market_data, product_name_or_id):
     market_lookup = {product['id']: product 
@@ -31,12 +32,33 @@ def price_comparison(product_data, market_data, product_name_or_id):
     return {"error": "Product not found in the vendor list."}
   
 
-class BlockPurchaseTool(BaseTool):
-    name: str = "Block Purchase Tool"
-    description: str = "Blocks the user from proceeding with a purchase if flagged items are detected."
 
-    def _run(self, input: list):
-        """Checks flagged items and blocks purchase if necessary."""
-        if input:
-            return f"Purchase blocked due to the following flagged items: {', '.join(input)}"
-        return "No flagged items. Purchase can proceed."
+
+load_dotenv()
+CHANNEL_ID = int(os.getenv('CHANNEL_ID'))
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+
+def send_message_to_discord(message):
+
+    # Set up intents (for reading message content, if required)
+    intents = discord.Intents.default()
+    intents.message_content = True  # Ensure this is enabled
+
+    # Initialize the bot client
+    client = discord.Client(intents=intents)
+
+    # Event to trigger when the bot is ready
+    @client.event
+    async def on_ready():
+        print(f'Logged in as {client.user}')
+
+        # Specify the channel ID you want to send the message to
+        channel_id = CHANNEL_ID  # Replace with your channel's ID
+        channel = client.get_channel(CHANNEL_ID)
+
+        if channel:
+            await channel.send(message)
+
+        await client.close()
+
+    client.run(BOT_TOKEN)

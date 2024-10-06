@@ -1,4 +1,5 @@
 import time
+import datetime
 import streamlit as st
 from app import vendors
 from agents.police_agent import agent
@@ -83,7 +84,16 @@ def handle_suspicious_items(cart, vendors):
 
     if not st.session_state['cart_scanned'] and st.session_state['warnings']:
         st.error("Some items have been flagged as potentially suspicious and will be removed from your cart.")
+        
+        report = format_discord_warning_report(warning_messages=st.session_state['warnings'], vendors=vendors,
+                                                      cart_items=st.session_state.cart)
+        send_discord_warning_report(warning_report=report)
+        
+        
+        
         time.sleep(5) 
+        
+        
         
         # Remove suspicious items
         remove_suspicious_items_from_cart(cart, vendors, st.session_state['warnings'])
@@ -121,6 +131,58 @@ def run_agent_on_cart(cart, vendors):
         
     else:
         st.write("No products in the cart to check.")
+        
+        
+def send_discord_warning_report(warning_report):
+    response = agent.run(f"""Please send the following, official warning report to system admins: {warning_report}. 
+                Format the report in an easily readable but alarming manner. 
+                As an example, you can format it like this:
+
+                🔴🔴🔴 WARNING REPORT 🔴🔴🔴 
+
+                Cop-N-Shop Warning Report:
+                🕒 Time of warnings: 1728241827.7173142 
+
+                🛍 Vendor Names: 
+
+                Moe's Excellent Phones
+                Rating: 2.1
+                Products: Infinix Hot 7, Sagem my231x, vivo U20, alcatel Miss Sixty 2009, Samsung T929 Memoir
+
+                Jane's Phone Surplus
+                Rating: 4.9
+                Products: BLU Studio M HD, VK Mobile VK580, Micromax Evok Dual Note E4815, BLU Studio C HD, Lava Fuel F1, Philips 399, Samsung I9003 Galaxy SL, Lava P7, Samsung P940, Samsung Galaxy Tab 2 7.0 P3110
+
+                Phone's R' Us
+                Rating: 4.5
+                Products: Samsung A257 Magnet, Prestigio MultiPad 7.0 HD +, Lenovo A830, Unnecto Eco, LG L Prime
+
+                🛒 Cart Items: Infinix Hot 7 (1), Sagem my231x (1)
+
+                ⚠️ Warnings Reported: 
+
+                Scam: No
+                Scam: The vendor's price for Sagem my231x is significantly lower than the market price. This could indicate a scam.
+
+                Please investigate these vendors immediately! 💼🔍🚨
+                """)
+    print("RESPONSE", response)
+
+
+def format_discord_warning_report(warning_messages, vendors, cart_items):
+
+    timestamp = datetime.datetime.now()
+    time_of_warning = timestamp.strftime('%Y-%m-%d %H:%M:%S')
+
+    report_str = (f"Time of warnings: {time_of_warning} \n"
+                  f"Vendor Names: {vendors}"
+                  f"Cart Items: {cart_items}"
+                  f"Warnings Reported: \n")
+
+    for warning_msg in warning_messages:
+        report_str += warning_msg + "\n"
+
+    return report_str
 
 
 # Main application code
@@ -134,6 +196,8 @@ with col1:
         st.session_state['cart_scanned'] = False
         st.session_state['warnings'] = []
         st.switch_page("app.py")
+        
+        
 
 # Display the cart items and total price
 total_price = display_cart_items(st.session_state.cart, vendors)

@@ -61,7 +61,7 @@ with col1:
     # Main section to display vendors and products
     for vendor in vendors:
         st.subheader(vendor["name"])
-        if st.button(f"Talk with {vendor["name"]}"):
+        if st.button(f"Talk with {vendor['name']}"):
             if 'vendor' not in st.session_state: 
                 st.session_state.vendor = ""
             st.session_state.vendor = vendor
