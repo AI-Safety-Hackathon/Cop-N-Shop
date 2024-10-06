@@ -9,11 +9,11 @@ st.set_page_config(page_title="Cop N' Shop", page_icon="🚓", layout="wide", in
 # Load vendors and products from JSON files
 def load_data():
     # Load vendor data
-    with open(os.path.join('db', 'vendor_data.json')) as f:
+    with open(os.path.join('src', 'db', 'vendor_data.json')) as f:
         vendor_data = json.load(f)
 
     # Load product data
-    with open(os.path.join('db', 'product_data.json')) as f:
+    with open(os.path.join('src', 'db', 'product_data.json')) as f:
         product_data = json.load(f)
 
     # Combine vendor data with products
