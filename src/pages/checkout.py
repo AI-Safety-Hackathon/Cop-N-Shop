@@ -8,7 +8,7 @@ if 'cart' not in st.session_state:
 # Load page
 st.title("Cop N' Shop Marketplace")
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([3, 1])
 with col1:
     back_btn = st.button("Back to Products")
 with col2: 
